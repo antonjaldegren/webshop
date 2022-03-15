@@ -12,7 +12,6 @@ function AnimatedPage({ children }) {
 	return (
 		<Box
 			as={motion.div}
-			minHeight="100vh"
 			initial="initial"
 			animate="animate"
 			exit="exit"

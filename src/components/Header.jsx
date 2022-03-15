@@ -11,6 +11,7 @@ function Header() {
 			w="100%"
 			bg="rgba(255, 255, 255, 0.8)"
 			backdropFilter="saturate(180%) blur(5px)"
+			boxShadow="sm"
 			zIndex="999"
 		>
 			<Flex
@@ -25,7 +26,7 @@ function Header() {
 					<Link to="/">Home</Link>
 					<Link to="/products">Products</Link>
 					<Link to="/cart">
-						<MdShoppingCart />
+						<MdShoppingCart size={25} />
 						<Box />
 					</Link>
 				</HStack>
