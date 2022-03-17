@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import {
@@ -17,14 +17,17 @@ import {
 	Grid,
 } from "@chakra-ui/react";
 import useCart from "../hooks/useCart";
-import useGetProduct from "../hooks/useGetProduct";
+import useProducts from "../hooks/useProducts";
 import AnimatedPage from "../components/AnimatedPage";
 
 function product() {
 	const [quantity, setQuantity] = useState(1);
-	const { addProduct } = useCart();
+
 	const { id } = useParams();
-	const product = useGetProduct(id);
+	const { addProduct } = useCart();
+	const { getProductById } = useProducts();
+
+	const product = useMemo(() => getProductById(id), [id]);
 
 	return (
 		<div>
