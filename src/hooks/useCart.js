@@ -4,24 +4,26 @@ import { useRecoilState } from "recoil";
 export default function useCart() {
 	const [cart, setCart] = useRecoilState(cartState);
 
-	function addProduct(product, amount) {
+	function addProduct(product, quantity) {
 		if (cart.some((item) => item.product.id === product.id)) {
 			setCart(
 				[...cart].map((item) =>
 					item.product.id === product.id
-						? { ...item, amount: item.amount + amount }
+						? { ...item, quantity: item.quantity + quantity }
 						: item
 				)
 			);
 			return;
 		}
-		setCart([...cart, { product: product, amount: amount }]);
+		setCart([...cart, { product: product, quantity: quantity }]);
 	}
 
-	function changeAmount(product, amount) {
+	function changeQuantity(product, quantity) {
 		setCart(
 			[...cart].map((item) =>
-				item.product === product ? { ...item, amount: amount } : item
+				item.product === product
+					? { ...item, quantity: quantity }
+					: item
 			)
 		);
 	}
@@ -32,5 +34,5 @@ export default function useCart() {
 		);
 	}
 
-	return { cart, addProduct, changeAmount, removeProduct };
+	return { cart, addProduct, changeQuantity, removeProduct };
 }

@@ -1,19 +1,26 @@
 import React from "react";
-import { Stack, Heading, Button, Image } from "@chakra-ui/react";
+import { Stack, Heading, Button, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function ProductPreview({ data }) {
 	return (
 		<Stack
-			border="1px solid grey"
 			padding="1em"
 			justifyContent="space-between"
+			boxShadow="md"
+			spacing={5}
 		>
-			<Image src={data.image} />
+			<Image
+				src={data.image}
+				alt={data.title}
+				boxSize="100%"
+				objectFit="contain"
+			/>
 			<Heading as="h2" size="sm">
 				{data.title}
 			</Heading>
-			<Button as={Link} to={`/products/${data.id}`}>
+			<Text>${data.price}</Text>
+			<Button as={Link} to={`/products/${data.id}`} flexShrink={0}>
 				Details
 			</Button>
 		</Stack>

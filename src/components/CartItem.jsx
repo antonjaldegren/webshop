@@ -1,35 +1,37 @@
 import React from "react";
 import {
 	Flex,
-	Grid,
+	Spacer,
 	Text,
+	Box,
 	Button,
 	Heading,
 	HStack,
 	VStack,
+	Center,
+	Image,
+	AspectRatio,
 } from "@chakra-ui/react";
-import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
-function CartItem({ data: { product, amount } }) {
-	const { changeAmount, removeProduct } = useCart();
+function CartItem({ data: { product, quantity } }) {
+	const { changeQuantity, removeProduct } = useCart();
 
 	return (
-		<VStack
-			key={product.id}
-			boxShadow="md"
-			padding="1em"
-			spacing={5}
-			display="block"
-		>
-			<HStack align="flex-start">
-				<MdCancel
-					size="25"
-					onClick={() => removeProduct(product)}
-					color="red"
-					cursor="pointer"
-				/>
+		<HStack boxShadow="md" padding="1.5em" spacing={6}>
+			<Box w="30%">
+				<AspectRatio ratio={1 / 1} w="100%">
+					<Box>
+						<Image
+							src={product.image}
+							boxSize="100%"
+							objectFit="contain"
+						/>
+					</Box>
+				</AspectRatio>
+			</Box>
+			<VStack spacing={5} display="block" width="70%">
 				<Heading
 					as={Link}
 					to={`/products/${product.id}`}
@@ -38,35 +40,37 @@ function CartItem({ data: { product, amount } }) {
 				>
 					{product.title}
 				</Heading>
-			</HStack>
-			<Grid templateColumns="2fr 1fr 1fr">
-				<Flex direction="column" gap={4}>
-					<Text>Amount</Text>
+				<Text
+					onClick={() => removeProduct(product)}
+					textDecoration="underline"
+					cursor="pointer"
+				>
+					Remove item
+				</Text>
+				<Flex>
 					<HStack direction="column">
 						<Button
-							disabled={amount === 1}
-							onClick={() => changeAmount(product, amount - 1)}
+							disabled={quantity === 1}
+							onClick={() =>
+								changeQuantity(product, quantity - 1)
+							}
 						>
 							-
 						</Button>
-						<Text>{amount}</Text>
+						<Center width={7}>{quantity}</Center>
 						<Button
-							onClick={() => changeAmount(product, amount + 1)}
+							onClick={() =>
+								changeQuantity(product, quantity + 1)
+							}
 						>
 							+
 						</Button>
 					</HStack>
+					<Spacer></Spacer>
+					<Center fontSize="lg">${product.price * quantity}</Center>
 				</Flex>
-				<Flex direction="column" gap={4}>
-					<Text>Price</Text>
-					<Text>${product.price}</Text>
-				</Flex>
-				<Flex direction="column" gap={4}>
-					<Text>Sub total</Text>
-					<Text>${product.price * amount}</Text>
-				</Flex>
-			</Grid>
-		</VStack>
+			</VStack>
+		</HStack>
 	);
 }
 

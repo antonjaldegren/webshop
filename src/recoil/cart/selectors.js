@@ -6,10 +6,10 @@ export const getCartTotal = selector({
 	get: ({ get }) => {
 		const cart = get(cartState);
 
-		const totalItems = cart.reduce((acc, cur) => acc + cur.amount, 0);
+		const totalItems = cart.reduce((acc, cur) => acc + cur.quantity, 0);
 
 		const totalPrice = cart.reduce(
-			(acc, cur) => acc + cur.product.price * cur.amount,
+			(acc, cur) => acc + cur.product.price * cur.quantity,
 			0
 		);
 
