@@ -6,22 +6,21 @@ import {
 	AspectRatio,
 	Heading,
 	Stack,
+	HStack,
 	Text,
 	Button,
 	Box,
-	NumberInput,
-	NumberInputField,
-	NumberInputStepper,
-	NumberIncrementStepper,
-	NumberDecrementStepper,
-	Grid,
+	Center,
+	Flex,
 } from "@chakra-ui/react";
 import useCart from "../hooks/useCart";
+import useCartPopover from "../hooks/useCartPopover";
 import useProducts from "../hooks/useProducts";
 import AnimatedPage from "../components/AnimatedPage";
 
 function product() {
 	const [quantity, setQuantity] = useState(1);
+	const { openCartPopover } = useCartPopover();
 
 	const { id } = useParams();
 	const { addProduct } = useCart();
@@ -52,26 +51,31 @@ function product() {
 						<Heading>{product.title}</Heading>
 						<Text>{product.description}</Text>
 						<Text fontSize="lg">${product.price}</Text>
-						<Grid templateColumns="1fr 3fr" gap={6}>
-							<NumberInput
-								defaultValue={1}
-								min={1}
-								max={10}
-								value={quantity}
-								onChange={(value) => setQuantity(Number(value))}
-							>
-								<NumberInputField />
-								<NumberInputStepper>
-									<NumberIncrementStepper />
-									<NumberDecrementStepper />
-								</NumberInputStepper>
-							</NumberInput>
+						<Flex gap={6}>
+							<HStack direction="column">
+								<Button
+									disabled={quantity === 1}
+									onClick={() => setQuantity(quantity - 1)}
+								>
+									-
+								</Button>
+								<Center width={7}>{quantity}</Center>
+								<Button
+									onClick={() => setQuantity(quantity + 1)}
+								>
+									+
+								</Button>
+							</HStack>
 							<Button
-								onClick={() => addProduct(product, quantity)}
+								flex={1}
+								onClick={() => {
+									addProduct(product, quantity);
+									openCartPopover();
+								}}
 							>
 								Add to cart
 							</Button>
-						</Grid>
+						</Flex>
 					</Stack>
 				</Stack>
 			</AnimatedPage>

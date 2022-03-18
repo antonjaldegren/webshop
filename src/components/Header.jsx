@@ -1,13 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Text, Flex, HStack } from "@chakra-ui/react";
-import { BsBag } from "react-icons/bs";
-import { getCartTotal } from "../recoil/cart/selectors";
-import { useRecoilValue } from "recoil";
+import { Box, Flex, HStack } from "@chakra-ui/react";
+import CartPopover from "./CartPopover";
 
 function Header() {
-	const { totalItems } = useRecoilValue(getCartTotal);
-
 	return (
 		<Box
 			as="header"
@@ -24,29 +20,14 @@ function Header() {
 				margin="0 auto"
 				padding="1em"
 				w="100%"
+				align="center"
 			>
 				<Link to="/">LOGO</Link>
 				<HStack as="nav" spacing="min(5vw, 50px)" align="center">
-					<Link to="/">Home</Link>
 					<Link to="/products">Products</Link>
-					<Link to="/cart">
-						<Box
-							position="relative"
-							display="grid"
-							placeItems="center"
-						>
-							<BsBag size={30} />
-							{totalItems ? (
-								<Text
-									position="absolute"
-									fontSize={11}
-									top="35%"
-								>
-									{totalItems}
-								</Text>
-							) : null}
-						</Box>
-					</Link>
+					<Box>
+						<CartPopover />
+					</Box>
 				</HStack>
 			</Flex>
 		</Box>

@@ -34,5 +34,9 @@ export default function useCart() {
 		);
 	}
 
-	return { cart, addProduct, changeQuantity, removeProduct };
+	function clearCart() {
+		setCart([]);
+	}
+
+	return { cart, addProduct, changeQuantity, removeProduct, clearCart };
 }

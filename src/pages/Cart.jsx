@@ -18,10 +18,10 @@ import { getCartTotal } from "../recoil/cart/selectors";
 
 function Cart() {
 	const [shipping, setShipping] = useState(9);
-	const { cart } = useCart();
+	const { cart, clearCart } = useCart();
 	const { totalPrice } = useRecoilValue(getCartTotal);
 
-	useEffect(() => setShipping(totalPrice > 99 ? 0 : 9), [totalPrice]);
+	useEffect(() => setShipping(totalPrice > 100 ? 0 : 9), [totalPrice]);
 
 	return (
 		<>
@@ -29,7 +29,13 @@ function Cart() {
 				<title>Webshop | CART</title>
 			</Helmet>
 			<Stack>
-				<Heading as="h1">Cart</Heading>
+				<Flex>
+					<Heading as="h1">Cart</Heading>
+					<Spacer></Spacer>
+					{cart.length ? (
+						<Button onClick={clearCart}>Clear cart</Button>
+					) : null}
+				</Flex>
 				{!cart.length ? (
 					<Text fontSize="lg">No products added</Text>
 				) : (
@@ -64,7 +70,7 @@ function Cart() {
 										<Spacer />
 										<Text>${shipping}</Text>
 									</Flex>
-									{totalPrice < 99 && (
+									{totalPrice < 100 && (
 										<Text
 											paddingLeft="5%"
 											fontSize="sm"

@@ -1,8 +1,16 @@
 import React from "react";
-import { Stack, Heading, Button, Image, Text } from "@chakra-ui/react";
+import { Stack, Heading, Button, Image, Text, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { cartPopoverState } from "../recoil/cartPopover/atom";
+import useCart from "../hooks/useCart";
+import useCartPopover from "../hooks/useCartPopover";
 
-function ProductPreview({ data }) {
+function ProductPreview({ product }) {
+	const { addProduct } = useCart();
+	const { openCartPopover } = useCartPopover();
+	const [isOpen, setIsOpen] = useRecoilState(cartPopoverState);
+
 	return (
 		<Stack
 			padding="1em"
@@ -11,18 +19,35 @@ function ProductPreview({ data }) {
 			spacing={5}
 		>
 			<Image
-				src={data.image}
-				alt={data.title}
+				src={product.image}
+				alt={product.title}
 				boxSize="100%"
 				objectFit="contain"
 			/>
 			<Heading as="h2" size="sm">
-				{data.title}
+				{product.title}
 			</Heading>
-			<Text>${data.price}</Text>
-			<Button as={Link} to={`/products/${data.id}`} flexShrink={0}>
-				Details
-			</Button>
+			<Text>${product.price}</Text>
+			<Flex gap={3}>
+				<Button
+					as={Link}
+					to={`/products/${product.id}`}
+					flex={3}
+					fontSize="sm"
+				>
+					Details
+				</Button>
+				<Button
+					flex={5}
+					onClick={() => {
+						addProduct(product, 1);
+						openCartPopover();
+					}}
+					fontSize="sm"
+				>
+					Add to cart
+				</Button>
+			</Flex>
 		</Stack>
 	);
 }

@@ -10,6 +10,7 @@ import CategoryLink from "../components/CategoryLink";
 
 function Products() {
 	const { products, categories, getProductsByCategory } = useProducts();
+
 	const [searchParams] = useSearchParams();
 	const category = searchParams.get("category");
 
@@ -44,7 +45,10 @@ function Products() {
 				<AnimatedPage>
 					<SimpleGrid minChildWidth="200px" spacing="2em">
 						{currentProducts.map((product) => (
-							<ProductPreview key={product.id} data={product} />
+							<ProductPreview
+								key={product.id}
+								product={product}
+							/>
 						))}
 					</SimpleGrid>
 				</AnimatedPage>
