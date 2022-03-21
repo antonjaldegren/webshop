@@ -11,7 +11,7 @@ function App() {
 			<Container padding="5em 1em" maxW="container.xl" minH="100vh">
 				<Outlet />
 			</Container>
-			<Center as="footer" bg="grey" paddingY="3em">
+			<Center as="footer" bg="gray.100" paddingY="3em">
 				Footer
 			</Center>
 		</div>

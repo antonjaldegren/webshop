@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
 	Image,
 	AspectRatio,
@@ -13,23 +13,37 @@ import {
 	Center,
 	Flex,
 } from "@chakra-ui/react";
+
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 import useProducts from "../hooks/useProducts";
 import AnimatedPage from "../components/AnimatedPage";
 
 function product() {
+	const [product, setProduct] = useState(null);
 	const [quantity, setQuantity] = useState(1);
-	const { openCartPopover } = useCartPopover();
 
-	const { id } = useParams();
 	const { addProduct } = useCart();
 	const { getProductById } = useProducts();
+	const { openCartPopover } = useCartPopover();
 
-	const product = useMemo(() => getProductById(id), [id]);
+	const navigate = useNavigate();
+	const { id } = useParams();
+
+	useEffect(() => {
+		const productById = getProductById(id);
+		if (productById) {
+			console.log("Setting product...");
+			setProduct(productById);
+			return;
+		}
+		navigate("/notfound");
+	}, []);
+
+	if (!product) return null;
 
 	return (
-		<div>
+		<>
 			<Helmet>
 				<title>Webshop | {product.title}</title>
 			</Helmet>
@@ -79,7 +93,7 @@ function product() {
 					</Stack>
 				</Stack>
 			</AnimatedPage>
-		</div>
+		</>
 	);
 }
 

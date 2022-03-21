@@ -2,8 +2,8 @@ import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { Heading, Stack, SimpleGrid, Tag, Flex } from "@chakra-ui/react";
 import { useSearchParams, Link } from "react-router-dom";
-import useProducts from "../hooks/useProducts";
 
+import useProducts from "../hooks/useProducts";
 import AnimatedPage from "../components/AnimatedPage";
 import ProductPreview from "../components/ProductPreview";
 import CategoryLink from "../components/CategoryLink";

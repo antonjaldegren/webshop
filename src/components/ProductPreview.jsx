@@ -1,6 +1,7 @@
 import React from "react";
 import { Stack, Heading, Button, Image, Text, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 
@@ -21,7 +22,7 @@ function ProductPreview({ product }) {
 				boxSize="100%"
 				objectFit="contain"
 			/>
-			<Heading as="h2" size="sm">
+			<Heading as={Link} to={`/products/${product.id}`} size="sm">
 				{product.title}
 			</Heading>
 			<Text>${product.price}</Text>

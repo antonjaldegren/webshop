@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Text, Flex, HStack } from "@chakra-ui/react";
+
 import CartPopover from "./CartPopover";
 
 function Header() {
@@ -22,7 +23,9 @@ function Header() {
 				w="100%"
 				align="center"
 			>
-				<Link to="/">LOGO</Link>
+				<Text as={Link} to="/">
+					LOGO
+				</Text>
 				<HStack as="nav" spacing="min(5vw, 50px)" align="center">
 					<Text
 						as={Link}

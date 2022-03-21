@@ -16,6 +16,7 @@ import {
 	VStack,
 	Spacer,
 } from "@chakra-ui/react";
+
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 import CartItemPreview from "./CartItemPreview";
@@ -66,7 +67,7 @@ function CartPopover() {
 						<Button
 							onFocus={openCartPopover}
 							onClick={closeCartPopover}
-							disabled={!cart.length}
+							disabled={!totalItems}
 							flex={1}
 						>
 							Checkout

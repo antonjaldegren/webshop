@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Box, Text, Flex, Spacer } from "@chakra-ui/react";
+
 import useProducts from "../hooks/useProducts";
 
 function CartItemPreview({ item }) {

@@ -1,12 +1,14 @@
 import React from "react";
 import { Box, Text, Center } from "@chakra-ui/react";
 import { BsCart } from "react-icons/bs";
+
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 
 function CartIcon() {
 	const { openCartPopover } = useCartPopover();
 	const { totalItems } = useCart(useCart);
+
 	return (
 		<Box
 			position="relative"

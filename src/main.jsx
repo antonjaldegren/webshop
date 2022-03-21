@@ -5,13 +5,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import "./index.css";
 
 import App from "./App";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import NotFound from "./pages/NotFound";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -32,6 +32,7 @@ ReactDOM.render(
 										element={<Product />}
 									/>
 									<Route path="/cart" element={<Cart />} />
+									<Route path="*" element={<NotFound />} />
 								</Route>
 							</Routes>
 						</AnimatePresence>

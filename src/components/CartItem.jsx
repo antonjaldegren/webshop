@@ -13,6 +13,7 @@ import {
 	AspectRatio,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
 import useProducts from "../hooks/useProducts";
 import useCart from "../hooks/useCart";
 

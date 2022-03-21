@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Heading, Text, Button, Stack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
 import AnimatedPage from "../components/AnimatedPage";
 
 function Home() {
@@ -14,7 +15,7 @@ function Home() {
 				<Heading>Home</Heading>
 				<AnimatedPage>
 					<Stack align="flex-start" spacing="1em">
-						<Text>Text i home</Text>
+						<Text>Hero/Call to action</Text>
 						<Button as={Link} to="/products">
 							Products
 						</Button>
