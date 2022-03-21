@@ -1,14 +1,15 @@
 import { cartState } from "../recoil/cart/atom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 
 export default function useCart() {
 	const [cart, setCart] = useRecoilState(cartState);
+	const resetCart = useResetRecoilState(cartState);
 
 	function addProduct(product, quantity) {
-		if (cart.some((item) => item.product.id === product.id)) {
+		if (cart.some((item) => item.product === product)) {
 			setCart(
 				[...cart].map((item) =>
-					item.product.id === product.id
+					item.product === product
 						? { ...item, quantity: item.quantity + quantity }
 						: item
 				)
@@ -34,9 +35,11 @@ export default function useCart() {
 		);
 	}
 
-	function clearCart() {
-		setCart([]);
-	}
-
-	return { cart, addProduct, changeQuantity, removeProduct, clearCart };
+	return {
+		cart,
+		addProduct,
+		changeQuantity,
+		removeProduct,
+		resetCart,
+	};
 }

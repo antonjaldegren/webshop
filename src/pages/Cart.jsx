@@ -18,7 +18,7 @@ import { getCartTotal } from "../recoil/cart/selectors";
 
 function Cart() {
 	const [shipping, setShipping] = useState(9);
-	const { cart, clearCart } = useCart();
+	const { cart, resetCart } = useCart();
 	const { totalPrice } = useRecoilValue(getCartTotal);
 
 	useEffect(() => setShipping(totalPrice > 100 ? 0 : 9), [totalPrice]);
@@ -33,7 +33,7 @@ function Cart() {
 					<Heading as="h1">Cart</Heading>
 					<Spacer></Spacer>
 					{cart.length ? (
-						<Button onClick={clearCart}>Clear cart</Button>
+						<Button onClick={resetCart}>Clear cart</Button>
 					) : null}
 				</Flex>
 				{!cart.length ? (
