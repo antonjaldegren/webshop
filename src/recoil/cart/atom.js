@@ -1,10 +1,9 @@
 import { atom } from "recoil";
 
-const localStorageEffect =
-	(key) =>
-	({ setSelf, onSet }) => {
+function localStorageEffect(key) {
+	return ({ setSelf, onSet }) => {
 		const savedValue = localStorage.getItem(key);
-		if (savedValue != null) setSelf(JSON.parse(savedValue));
+		if (savedValue) setSelf(JSON.parse(savedValue));
 
 		onSet((newValue, _, isReset) =>
 			isReset
@@ -12,6 +11,7 @@ const localStorageEffect =
 				: localStorage.setItem(key, JSON.stringify(newValue))
 		);
 	};
+}
 
 export const cartState = atom({
 	key: "cartState",

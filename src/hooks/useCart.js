@@ -16,23 +16,23 @@ export default function useCart() {
 			);
 			return;
 		}
-		setCart([...cart, { product: product, quantity: quantity }]);
+		setCart([...cart, { product, quantity }]);
 	}
 
 	function changeQuantity(product, quantity) {
-		setCart(
-			[...cart].map((item) =>
-				item.product === product
-					? { ...item, quantity: quantity }
-					: item
-			)
+		const newCart = [...cart].map((item) =>
+			item.product === product ? { ...item, quantity } : item
 		);
+
+		newCart.length ? setCart(newCart) : resetCart();
 	}
 
 	function removeProduct(product) {
-		setCart(
-			[...cart].filter((item) => (item.product === product ? null : item))
+		const newCart = [...cart].filter((item) =>
+			item.product === product ? null : item
 		);
+
+		newCart.length ? setCart(newCart) : resetCart();
 	}
 
 	return {
