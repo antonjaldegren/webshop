@@ -8,7 +8,7 @@ function App() {
 	return (
 		<div className="App">
 			<Header />
-			<Container padding="5em 1em" maxW="container.lg" minH="100vh">
+			<Container padding="5em 1em" maxW="container.xl" minH="100vh">
 				<Outlet />
 			</Container>
 			<Center as="footer" bg="grey" paddingY="3em">

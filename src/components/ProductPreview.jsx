@@ -1,15 +1,12 @@
 import React from "react";
 import { Stack, Heading, Button, Image, Text, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { cartPopoverState } from "../recoil/cartPopover/atom";
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 
 function ProductPreview({ product }) {
 	const { addProduct } = useCart();
 	const { openCartPopover } = useCartPopover();
-	const [isOpen, setIsOpen] = useRecoilState(cartPopoverState);
 
 	return (
 		<Stack
@@ -40,7 +37,7 @@ function ProductPreview({ product }) {
 				<Button
 					flex={5}
 					onClick={() => {
-						addProduct(product, 1);
+						addProduct(product.id, 1);
 						openCartPopover();
 					}}
 					fontSize="sm"

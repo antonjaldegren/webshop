@@ -69,7 +69,7 @@ function product() {
 							<Button
 								flex={1}
 								onClick={() => {
-									addProduct(product, quantity);
+									addProduct(id, quantity);
 									openCartPopover();
 								}}
 							>

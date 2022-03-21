@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Box, Text, Flex, HStack } from "@chakra-ui/react";
 import CartPopover from "./CartPopover";
 
 function Header() {
@@ -16,7 +16,7 @@ function Header() {
 		>
 			<Flex
 				justify="space-between"
-				maxW="container.lg"
+				maxW="container.xl"
 				margin="0 auto"
 				padding="1em"
 				w="100%"
@@ -24,7 +24,14 @@ function Header() {
 			>
 				<Link to="/">LOGO</Link>
 				<HStack as="nav" spacing="min(5vw, 50px)" align="center">
-					<Link to="/products">Products</Link>
+					<Text
+						as={Link}
+						to="/products"
+						letterSpacing={1}
+						fontWeight="light"
+					>
+						PRODUCTS
+					</Text>
 					<Box>
 						<CartPopover />
 					</Box>

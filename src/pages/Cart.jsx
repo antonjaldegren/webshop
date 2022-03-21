@@ -13,13 +13,10 @@ import {
 import AnimatedPage from "../components/AnimatedPage";
 import CartItem from "../components/CartItem";
 import useCart from "../hooks/useCart";
-import { useRecoilValue } from "recoil";
-import { getCartTotal } from "../recoil/cart/selectors";
 
 function Cart() {
 	const [shipping, setShipping] = useState(9);
-	const { cart, resetCart } = useCart();
-	const { totalPrice } = useRecoilValue(getCartTotal);
+	const { cart, totalPrice, resetCart } = useCart();
 
 	useEffect(() => setShipping(totalPrice > 100 ? 0 : 9), [totalPrice]);
 
@@ -30,23 +27,22 @@ function Cart() {
 			</Helmet>
 			<Stack>
 				<Flex>
-					<Heading as="h1">Cart</Heading>
+					<Heading as="h1">Your cart</Heading>
 					<Spacer></Spacer>
 					{cart.length ? (
 						<Button onClick={resetCart}>Clear cart</Button>
 					) : null}
 				</Flex>
 				{!cart.length ? (
-					<Text fontSize="lg">No products added</Text>
+					<Text fontSize="lg" paddingY={6}>
+						No products added
+					</Text>
 				) : (
 					<AnimatedPage>
 						<Flex direction={["column", "column", "row"]} gap={6}>
 							<Stack spacing={6} w={["100%", "100%", "60%"]}>
 								{cart.map((item) => (
-									<CartItem
-										key={item.product.id}
-										data={item}
-									/>
+									<CartItem key={item.id} data={item} />
 								))}
 							</Stack>
 							<Stack

@@ -4,7 +4,6 @@ import {
 	Box,
 	Text,
 	Flex,
-	Center,
 	Button,
 	Popover,
 	PopoverTrigger,
@@ -17,65 +16,31 @@ import {
 	VStack,
 	Spacer,
 } from "@chakra-ui/react";
-import { BsCart } from "react-icons/bs";
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
-import { getCartTotal } from "../recoil/cart/selectors";
-import { useRecoilValue } from "recoil";
+import CartItemPreview from "./CartItemPreview";
+import CartIcon from "./CartIcon";
 
 function CartPopover() {
-	const { totalItems, totalPrice } = useRecoilValue(getCartTotal);
 	const { isOpen, closeCartPopover, openCartPopover } = useCartPopover();
-	const { cart } = useCart(useCart);
+	const { cart, totalItems, totalPrice } = useCart(useCart);
 
 	return (
-		<Popover
-			preventOverflow
-			placement="bottom-end"
-			maxH="90vh"
-			isOpen={isOpen}
-		>
+		<Popover placement="bottom-end" maxH="90vh" isOpen={isOpen}>
 			<PopoverTrigger>
-				<Box
-					position="relative"
-					display="grid"
-					placeItems="center"
-					cursor="pointer"
-					onClick={openCartPopover}
-				>
-					<BsCart size={30} />
-					{totalItems ? (
-						<Center
-							position="absolute"
-							top="22%"
-							left="28%"
-							height="50%"
-							width="50%"
-						>
-							<Text
-								fontSize={totalItems < 100 ? 10 : 7.5}
-								fontWeight="extrabold"
-								userSelect="none"
-							>
-								{totalItems}
-							</Text>
-						</Center>
-					) : null}
+				<Box>
+					<CartIcon />
 				</Box>
 			</PopoverTrigger>
 			<PopoverContent onBlur={closeCartPopover} margin="none">
 				<PopoverArrow />
 				<PopoverCloseButton onClick={closeCartPopover} />
-				<PopoverHeader fontWeight="bold">
-					Your shopping cart
-				</PopoverHeader>
+				<PopoverHeader fontWeight="bold">Your cart</PopoverHeader>
 				<PopoverBody maxHeight="40vh" overflowY="scroll">
 					<VStack align="flex-start" spacing={4}>
-						{cart.length ? (
+						{totalItems ? (
 							cart.map((item) => (
-								<Text key={`popover${item.product.id}`}>
-									{item.quantity} x {item.product.title}
-								</Text>
+								<CartItemPreview key={item.id} item={item} />
 							))
 						) : (
 							<Text paddingY={3}>No products added</Text>
@@ -83,7 +48,7 @@ function CartPopover() {
 					</VStack>
 				</PopoverBody>
 				<PopoverFooter>
-					<Flex fontWeight="bold">
+					<Flex fontWeight="bold" paddingY={2}>
 						<Text>Total</Text>
 						<Spacer />
 						<Text>${totalPrice}</Text>

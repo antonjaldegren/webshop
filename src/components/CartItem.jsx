@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
 	Flex,
 	Spacer,
@@ -13,10 +13,14 @@ import {
 	AspectRatio,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import useProducts from "../hooks/useProducts";
 import useCart from "../hooks/useCart";
 
-function CartItem({ data: { product, quantity } }) {
+function CartItem({ data: { id, quantity } }) {
+	const { getProductById } = useProducts();
 	const { changeQuantity, removeProduct } = useCart();
+
+	const product = useMemo(() => getProductById(id), []);
 
 	return (
 		<HStack boxShadow="md" padding="1.5em" spacing={6}>
@@ -34,14 +38,14 @@ function CartItem({ data: { product, quantity } }) {
 			<VStack spacing={5} display="block" width="70%">
 				<Heading
 					as={Link}
-					to={`/products/${product.id}`}
+					to={`/products/${id}`}
 					size="sm"
 					alignSelf="center"
 				>
 					{product.title}
 				</Heading>
 				<Text
-					onClick={() => removeProduct(product)}
+					onClick={() => removeProduct(id)}
 					textDecoration="underline"
 					cursor="pointer"
 				>
@@ -51,17 +55,13 @@ function CartItem({ data: { product, quantity } }) {
 					<HStack direction="column">
 						<Button
 							disabled={quantity === 1}
-							onClick={() =>
-								changeQuantity(product, quantity - 1)
-							}
+							onClick={() => changeQuantity(id, quantity - 1)}
 						>
 							-
 						</Button>
 						<Center width={7}>{quantity}</Center>
 						<Button
-							onClick={() =>
-								changeQuantity(product, quantity + 1)
-							}
+							onClick={() => changeQuantity(id, quantity + 1)}
 						>
 							+
 						</Button>
