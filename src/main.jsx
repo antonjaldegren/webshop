@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 ReactDOM.render(
@@ -32,6 +33,7 @@ ReactDOM.render(
 										element={<Product />}
 									/>
 									<Route path="/cart" element={<Cart />} />
+									<Route path="/admin" element={<Admin />} />
 									<Route path="*" element={<NotFound />} />
 								</Route>
 							</Routes>

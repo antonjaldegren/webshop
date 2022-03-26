@@ -1,8 +1,9 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { productsState } from "../recoil/products/atom";
+import { deleteProduct } from "../api";
 
 export default function useProducts() {
-	const products = useRecoilValue(productsState);
+	const [products, setProducts] = useRecoilState(productsState);
 
 	const categories = [
 		...new Set(products.map((product) => product.category)),
@@ -16,5 +17,16 @@ export default function useProducts() {
 		return products.filter((product) => product.category === category);
 	}
 
-	return { products, categories, getProductById, getProductsByCategory };
+	function removeProduct(id) {
+		deleteProduct(id);
+		setProducts(products.filter((product) => product.id !== id));
+	}
+
+	return {
+		products,
+		categories,
+		getProductById,
+		getProductsByCategory,
+		removeProduct,
+	};
 }

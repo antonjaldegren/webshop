@@ -19,7 +19,7 @@ import useCart from "../hooks/useCart";
 
 function CartItem({ data: { id, quantity } }) {
 	const { getProductById } = useProducts();
-	const { changeQuantity, removeProduct } = useCart();
+	const { changeQuantity, removeProductFromCart } = useCart();
 
 	const product = useMemo(() => getProductById(id), []);
 
@@ -46,7 +46,7 @@ function CartItem({ data: { id, quantity } }) {
 					{product.title}
 				</Heading>
 				<Text
-					onClick={() => removeProduct(id)}
+					onClick={() => removeProductFromCart(id)}
 					textDecoration="underline"
 					cursor="pointer"
 				>

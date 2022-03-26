@@ -5,10 +5,12 @@ function localStorageEffect(key) {
 		const savedValue = localStorage.getItem(key);
 		if (savedValue) setSelf(JSON.parse(savedValue));
 
-		onSet((newValue, _, isReset) =>
-			isReset
-				? localStorage.removeItem(key)
-				: localStorage.setItem(key, JSON.stringify(newValue))
+		onSet(
+			(newValue, _, isReset) =>
+				isReset
+					? localStorage.removeItem(key)
+					: localStorage.setItem(key, JSON.stringify(newValue))
+			// TODO: Update cart with API
 		);
 	};
 }

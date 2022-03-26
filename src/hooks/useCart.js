@@ -37,7 +37,7 @@ export default function useCart() {
 		newCart.length ? setCart(newCart) : resetCart();
 	}
 
-	function removeProduct(id) {
+	function removeProductFromCart(id) {
 		const newCart = [...cart].filter((item) =>
 			item.id === id ? null : item
 		);
@@ -51,7 +51,7 @@ export default function useCart() {
 		totalPrice,
 		addProduct,
 		changeQuantity,
-		removeProduct,
+		removeProductFromCart,
 		resetCart,
 	};
 }
