@@ -23,11 +23,15 @@ function RemoveProductModal({ product }) {
 
 	return (
 		<>
-			<Tooltip hasArrow label="Remove">
-				<span>
-					<BsTrash cursor="pointer" onClick={onOpen} />
-				</span>
-			</Tooltip>
+			<Button
+				size="sm"
+				colorScheme="blue"
+				variant="outline"
+				leftIcon={<BsTrash />}
+				onClick={onOpen}
+			>
+				Remove
+			</Button>
 
 			<AlertDialog
 				isOpen={isOpen}
@@ -59,7 +63,7 @@ function RemoveProductModal({ product }) {
 								}}
 								ml={3}
 							>
-								Delete
+								Remove
 							</Button>
 						</AlertDialogFooter>
 					</AlertDialogContent>

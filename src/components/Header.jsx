@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Text, Flex, HStack } from "@chakra-ui/react";
+import { Box, Button, Text, Flex, HStack } from "@chakra-ui/react";
 
+import LoginPopover from "./LoginPopover";
 import CartPopover from "./CartPopover";
 
 function Header() {
@@ -19,22 +20,29 @@ function Header() {
 				justify="space-between"
 				maxW="container.xl"
 				margin="0 auto"
-				padding="1em"
+				paddingX={4}
+				paddingY={2}
 				w="100%"
 				align="center"
 			>
 				<Text as={Link} to="/">
 					LOGO
 				</Text>
-				<HStack as="nav" spacing="min(5vw, 50px)" align="center">
-					<Text
+				<HStack as="nav" spacing="min(3vw, 50px)" align="center">
+					<Button
 						as={Link}
 						to="/products"
+						variant="ghost"
+						size="md"
+						padding={3}
 						letterSpacing={1}
 						fontWeight="light"
 					>
-						PRODUCTS
-					</Text>
+						Products
+					</Button>
+					<Box>
+						<LoginPopover />
+					</Box>
 					<Box>
 						<CartPopover />
 					</Box>

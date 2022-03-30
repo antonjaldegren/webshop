@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Box, Text, Flex, Spacer } from "@chakra-ui/react";
+import { numberToPrice } from "../utils";
 
 import useProducts from "../hooks/useProducts";
 
@@ -17,7 +18,7 @@ function CartItemPreview({ item }) {
 				<Text display="inline">{product.title}</Text>
 			</Box>
 			<Spacer />
-			<Text>${product.price * item.quantity}</Text>
+			<Text>${numberToPrice(product.price * item.quantity)}</Text>
 		</Flex>
 	);
 }

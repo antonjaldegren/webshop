@@ -1,9 +1,5 @@
 import React, { useState, useRef } from "react";
 import {
-	AccordionItem,
-	AccordionButton,
-	AccordionPanel,
-	AccordionIcon,
 	AlertDialog,
 	AlertDialogBody,
 	AlertDialogFooter,
@@ -13,8 +9,6 @@ import {
 	useDisclosure,
 	FormControl,
 	FormLabel,
-	FormErrorMessage,
-	FormHelperText,
 	Textarea,
 	Input,
 	InputGroup,
@@ -25,25 +19,15 @@ import {
 	Spacer,
 	Tooltip,
 	Text,
-	Link,
 	Box,
-	Heading,
 } from "@chakra-ui/react";
 import { BsPencilSquare } from "react-icons/bs";
 import { BsLink45Deg } from "react-icons/bs";
 import { BsCurrencyDollar } from "react-icons/bs";
-import { shallowEqual } from "../utils";
+import { isEqual } from "lodash";
 
 function EditProductModal({ product }) {
-	const initialState = {
-		title: product.title,
-		price: product.price,
-		description: product.description,
-		image: product.image,
-		category: product.category,
-	};
-
-	const [editedProduct, setEditedProduct] = useState(initialState);
+	const [editedProduct, setEditedProduct] = useState(product);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
 
@@ -54,16 +38,20 @@ function EditProductModal({ product }) {
 	}
 
 	function resetChanges() {
-		setEditedProduct(initialState);
+		setEditedProduct(product);
 	}
 
 	return (
 		<>
-			<Tooltip hasArrow label="Edit">
-				<span>
-					<BsPencilSquare cursor="pointer" onClick={onOpen} />
-				</span>
-			</Tooltip>
+			<Button
+				size="sm"
+				colorScheme="blue"
+				variant="outline"
+				leftIcon={<BsPencilSquare />}
+				onClick={onOpen}
+			>
+				Edit
+			</Button>
 
 			<AlertDialog
 				isOpen={isOpen}
@@ -77,10 +65,7 @@ function EditProductModal({ product }) {
 								<Text as="span">Edit product</Text>
 								<Spacer />
 								<Button
-									disabled={shallowEqual(
-										initialState,
-										editedProduct
-									)}
+									disabled={isEqual(product, editedProduct)}
 									onClick={resetChanges}
 								>
 									Reset changes
@@ -88,100 +73,92 @@ function EditProductModal({ product }) {
 							</Flex>
 						</AlertDialogHeader>
 						<AlertDialogBody>
-							<Stack>
-								<FormControl as={Stack} spacing={5}>
-									<Box>
-										<FormLabel htmlFor="title">
-											Title
-										</FormLabel>
+							<FormControl as={Stack} spacing={5}>
+								<Box>
+									<FormLabel htmlFor="title">Title</FormLabel>
+									<Input
+										id="title"
+										value={editedProduct.title}
+										onChange={(e) =>
+											handleInputChange(
+												e.target.value,
+												"title"
+											)
+										}
+									/>
+								</Box>
+								<Box>
+									<FormLabel htmlFor="price">Price</FormLabel>
+									<InputGroup>
+										<InputLeftElement
+											pointerEvents="none"
+											color="gray.400"
+											children={<BsCurrencyDollar />}
+										/>
 										<Input
-											id="title"
-											value={editedProduct.title}
+											id="price"
+											value={editedProduct.price}
 											onChange={(e) =>
 												handleInputChange(
 													e.target.value,
-													"title"
+													"price"
 												)
 											}
 										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="price">
-											Price
-										</FormLabel>
-										<InputGroup>
-											<InputLeftElement
-												pointerEvents="none"
-												color="gray.400"
-												children={<BsCurrencyDollar />}
-											/>
-											<Input
-												id="price"
-												value={editedProduct.price}
-												onChange={(e) =>
-													handleInputChange(
-														e.target.value,
-														"price"
-													)
-												}
-											/>
-										</InputGroup>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="description">
-											Description
-										</FormLabel>
-										<Textarea
-											minHeight="150px"
-											id="description"
-											value={editedProduct.description}
+									</InputGroup>
+								</Box>
+								<Box>
+									<FormLabel htmlFor="description">
+										Description
+									</FormLabel>
+									<Textarea
+										minHeight="150px"
+										id="description"
+										value={editedProduct.description}
+										onChange={(e) =>
+											handleInputChange(
+												e.target.value,
+												"description"
+											)
+										}
+									/>
+								</Box>
+								<Box>
+									<FormLabel htmlFor="image">Image</FormLabel>
+									<InputGroup>
+										<InputLeftElement
+											pointerEvents="none"
+											color="gray.400"
+											children={<BsLink45Deg />}
+										/>
+										<Input
+											id="image"
+											value={editedProduct.image}
 											onChange={(e) =>
 												handleInputChange(
 													e.target.value,
-													"description"
+													"image"
 												)
 											}
 										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="image">
-											Image
-										</FormLabel>
-										<InputGroup>
-											<InputLeftElement
-												pointerEvents="none"
-												color="gray.400"
-												children={<BsLink45Deg />}
-											/>
-											<Input
-												id="image"
-												value={editedProduct.image}
-												onChange={(e) =>
-													handleInputChange(
-														e.target.value,
-														"image"
-													)
-												}
-											/>
-										</InputGroup>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="category">
-											Category
-										</FormLabel>
-										<Input
-											id="category"
-											value={editedProduct.category}
-											onChange={(e) =>
-												handleInputChange(
-													e.target.value.toLowerCase(),
-													"category"
-												)
-											}
-										/>
-									</Box>
-								</FormControl>
-							</Stack>
+									</InputGroup>
+								</Box>
+								<Box>
+									<FormLabel htmlFor="category">
+										Category
+									</FormLabel>
+									<Input
+										id="category"
+										value={editedProduct.category}
+										onChange={(e) =>
+											handleInputChange(
+												e.target.value.toLowerCase(),
+												"category"
+											)
+										}
+									/>
+								</Box>
+							</FormControl>
 						</AlertDialogBody>
 						<AlertDialogFooter>
 							<Button
@@ -196,8 +173,8 @@ function EditProductModal({ product }) {
 							<Button
 								colorScheme="blue"
 								onClick={() => {
-									removeProductFromCart(product.id);
-									removeProduct(product.id);
+									// removeProductFromCart(product.id);
+									// removeProduct(product.id);
 									onClose();
 								}}
 								ml={3}

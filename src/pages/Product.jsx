@@ -13,7 +13,7 @@ import {
 	Center,
 	Flex,
 } from "@chakra-ui/react";
-
+import { numberToPrice } from "../utils";
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 import useProducts from "../hooks/useProducts";
@@ -33,7 +33,6 @@ function product() {
 	useEffect(() => {
 		const productById = getProductById(id);
 		if (productById) {
-			console.log("Setting product...");
 			setProduct(productById);
 			return;
 		}
@@ -43,57 +42,53 @@ function product() {
 	if (!product) return null;
 
 	return (
-		<>
+		<AnimatedPage>
 			<Helmet>
 				<title>Webshop | {product.title}</title>
 			</Helmet>
-			<AnimatedPage>
-				<Stack direction={["column", "column", "row"]} spacing="5%">
-					<Box w={["100%", "100%", "50%"]}>
-						<AspectRatio ratio={1 / 1} w="100%">
-							<Box>
-								<Image
-									src={product.image}
-									alt={product.title}
-									boxSize="100%"
-									objectFit="contain"
-								/>
-							</Box>
-						</AspectRatio>
-					</Box>
-					<Stack spacing={6} w={["100%", "100%", "50%"]}>
-						<Heading>{product.title}</Heading>
-						<Text>{product.description}</Text>
-						<Text fontSize="lg">${product.price}</Text>
-						<Flex gap={6}>
-							<HStack direction="column">
-								<Button
-									disabled={quantity === 1}
-									onClick={() => setQuantity(quantity - 1)}
-								>
-									-
-								</Button>
-								<Center width={7}>{quantity}</Center>
-								<Button
-									onClick={() => setQuantity(quantity + 1)}
-								>
-									+
-								</Button>
-							</HStack>
+			<Stack direction={["column", "column", "row"]} spacing="5%">
+				<Box w={["100%", "100%", "50%"]}>
+					<AspectRatio ratio={1 / 1} w="100%">
+						<Box>
+							<Image
+								src={product.image}
+								alt={product.title}
+								boxSize="100%"
+								objectFit="contain"
+							/>
+						</Box>
+					</AspectRatio>
+				</Box>
+				<Stack spacing={6} w={["100%", "100%", "50%"]}>
+					<Heading>{product.title}</Heading>
+					<Text>{product.description}</Text>
+					<Text fontSize="lg">${numberToPrice(product.price)}</Text>
+					<Flex gap={6}>
+						<HStack direction="column">
 							<Button
-								flex={1}
-								onClick={() => {
-									addProduct(id, quantity);
-									openCartPopover();
-								}}
+								disabled={quantity === 1}
+								onClick={() => setQuantity(quantity - 1)}
 							>
-								Add to cart
+								-
 							</Button>
-						</Flex>
-					</Stack>
+							<Center width={7}>{quantity}</Center>
+							<Button onClick={() => setQuantity(quantity + 1)}>
+								+
+							</Button>
+						</HStack>
+						<Button
+							flex={1}
+							onClick={() => {
+								addProduct(Number(id), quantity);
+								openCartPopover();
+							}}
+						>
+							Add to cart
+						</Button>
+					</Flex>
 				</Stack>
-			</AnimatedPage>
-		</>
+			</Stack>
+		</AnimatedPage>
 	);
 }
 

@@ -18,8 +18,10 @@ export default function useProducts() {
 	}
 
 	function removeProduct(id) {
-		deleteProduct(id);
-		setProducts(products.filter((product) => product.id !== id));
+		deleteProduct(id).then((data) => {
+			console.log(data);
+			setProducts(products.filter((product) => product.id !== data.id));
+		});
 	}
 
 	return {

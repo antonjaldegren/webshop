@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useRecoilValue } from "recoil";
 import {
 	Accordion,
@@ -9,7 +10,7 @@ import {
 	Box,
 	Heading,
 } from "@chakra-ui/react";
-
+import AnimatedPage from "../components/AnimatedPage";
 import useProducts from "../hooks/useProducts";
 import { cartsState } from "../recoil/carts/atom";
 import AdminProduct from "../components/AdminProduct";
@@ -21,18 +22,25 @@ function Admin() {
 	if (!carts.length) return <p>Loading...</p>;
 
 	return (
-		<>
+		<AnimatedPage>
+			<Helmet>
+				<title>Webshop | Admin</title>
+			</Helmet>
 			<Heading>Admin</Heading>
 			<Accordion allowToggle>
 				<AccordionItem>
-					<h2>
-						<AccordionButton>
-							<Box flex="1" textAlign="left">
-								Products
-							</Box>
-							<AccordionIcon />
-						</AccordionButton>
-					</h2>
+					<AccordionButton>
+						<Box
+							as="h2"
+							fontWeight="bold"
+							fontSize="lg"
+							flex="1"
+							textAlign="left"
+						>
+							Products
+						</Box>
+						<AccordionIcon />
+					</AccordionButton>
 					<AccordionPanel pb={4}>
 						<Accordion allowToggle>
 							{products.map((product) => (
@@ -44,25 +52,27 @@ function Admin() {
 						</Accordion>
 					</AccordionPanel>
 				</AccordionItem>
-
 				<AccordionItem>
-					<h2>
-						<AccordionButton>
-							<Box flex="1" textAlign="left">
-								Carts
-							</Box>
-							<AccordionIcon />
-						</AccordionButton>
-					</h2>
+					<AccordionButton>
+						<Box
+							as="h2"
+							fontWeight="bold"
+							fontSize="lg"
+							flex="1"
+							textAlign="left"
+						>
+							Carts
+						</Box>
+						<AccordionIcon />
+					</AccordionButton>
 					<AccordionPanel pb={4}>
-						{/* TODO: Add unique key to cart when fixed in backend */}
 						{carts.map((cart) => (
-							<p>{cart.id}</p>
+							<p key={cart.id}>{cart.id}</p>
 						))}
 					</AccordionPanel>
 				</AccordionItem>
 			</Accordion>
-		</>
+		</AnimatedPage>
 	);
 }
 

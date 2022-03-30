@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { getAllCarts } from "../../api";
 
-function getUsersEffect() {
+function getCartsEffect() {
 	return ({ setSelf }) => {
 		getAllCarts().then((data) => setSelf(data));
 	};
@@ -10,5 +10,5 @@ function getUsersEffect() {
 export const cartsState = atom({
 	key: "usersState",
 	default: [],
-	effects: [getUsersEffect()],
+	effects: [getCartsEffect()],
 });

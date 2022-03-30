@@ -1,9 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Heading, Spacer, Flex, Text, Stack, Button } from "@chakra-ui/react";
-
-import useCart from "../hooks/useCart";
 import AnimatedPage from "../components/AnimatedPage";
+import useCart from "../hooks/useCart";
 import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
 
@@ -11,7 +10,7 @@ function Cart() {
 	const { cart, totalItems, resetCart } = useCart();
 
 	return (
-		<>
+		<AnimatedPage>
 			<Helmet>
 				<title>Webshop | CART</title>
 			</Helmet>
@@ -28,19 +27,17 @@ function Cart() {
 						No products added
 					</Text>
 				) : (
-					<AnimatedPage>
-						<Flex direction={["column", "column", "row"]} gap={6}>
-							<Stack spacing={6} w={["100%", "100%", "60%"]}>
-								{cart.map((item) => (
-									<CartItem key={item.id} data={item} />
-								))}
-							</Stack>
-							<CartSummary />
-						</Flex>
-					</AnimatedPage>
+					<Flex direction={["column", "column", "row"]} gap={6}>
+						<Stack spacing={6} w={["100%", "100%", "60%"]}>
+							{cart.map((item) => (
+								<CartItem key={item.id} data={item} />
+							))}
+						</Stack>
+						<CartSummary />
+					</Flex>
 				)}
 			</Stack>
-		</>
+		</AnimatedPage>
 	);
 }
 

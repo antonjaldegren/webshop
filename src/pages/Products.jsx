@@ -4,9 +4,9 @@ import { Heading, Stack, SimpleGrid, Tag, Flex } from "@chakra-ui/react";
 import { useSearchParams, Link } from "react-router-dom";
 
 import useProducts from "../hooks/useProducts";
-import AnimatedPage from "../components/AnimatedPage";
 import ProductPreview from "../components/ProductPreview";
 import CategoryLink from "../components/CategoryLink";
+import AnimatedPage from "../components/AnimatedPage";
 
 function Products() {
 	const { products, categories, getProductsByCategory } = useProducts();
@@ -20,7 +20,7 @@ function Products() {
 	}, [category]);
 
 	return (
-		<>
+		<AnimatedPage>
 			<Helmet>
 				<title>Webshop | PRODUCTS</title>
 			</Helmet>
@@ -42,18 +42,13 @@ function Products() {
 						</CategoryLink>
 					))}
 				</Flex>
-				<AnimatedPage>
-					<SimpleGrid minChildWidth="200px" spacing="2em">
-						{currentProducts.map((product) => (
-							<ProductPreview
-								key={product.id}
-								product={product}
-							/>
-						))}
-					</SimpleGrid>
-				</AnimatedPage>
+				<SimpleGrid minChildWidth="200px" spacing={4}>
+					{currentProducts.map((product) => (
+						<ProductPreview key={product.id} product={product} />
+					))}
+				</SimpleGrid>
 			</Stack>
-		</>
+		</AnimatedPage>
 	);
 }
 

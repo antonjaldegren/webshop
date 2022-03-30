@@ -5,6 +5,7 @@ import {
 	Text,
 	Flex,
 	Button,
+	IconButton,
 	Popover,
 	PopoverTrigger,
 	PopoverContent,
@@ -16,6 +17,7 @@ import {
 	VStack,
 	Spacer,
 } from "@chakra-ui/react";
+import { numberToPrice } from "../utils";
 
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
@@ -27,10 +29,16 @@ function CartPopover() {
 	const { cart, totalItems, totalPrice } = useCart(useCart);
 
 	return (
-		<Popover placement="bottom-end" maxH="90vh" isOpen={isOpen}>
+		<Popover placement="bottom-end" isOpen={isOpen}>
 			<PopoverTrigger>
 				<Box>
-					<CartIcon />
+					<IconButton
+						colorScheme="gray"
+						variant="ghost"
+						size="md"
+						aria-label="Profile"
+						icon={<CartIcon size={29} />}
+					/>
 				</Box>
 			</PopoverTrigger>
 			<PopoverContent onBlur={closeCartPopover} margin="none">
@@ -52,10 +60,12 @@ function CartPopover() {
 					<Flex fontWeight="bold" paddingY={2}>
 						<Text>Total</Text>
 						<Spacer />
-						<Text>${totalPrice}</Text>
+						<Text>${numberToPrice(totalPrice)}</Text>
 					</Flex>
 					<Flex gap={4} paddingY={2}>
 						<Button
+							colorScheme="blue"
+							variant="outline"
 							as={Link}
 							onFocus={openCartPopover}
 							onClick={closeCartPopover}
@@ -65,6 +75,7 @@ function CartPopover() {
 							View cart
 						</Button>
 						<Button
+							colorScheme="blue"
 							onFocus={openCartPopover}
 							onClick={closeCartPopover}
 							disabled={!totalItems}

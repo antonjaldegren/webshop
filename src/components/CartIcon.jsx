@@ -5,7 +5,7 @@ import { BsCart } from "react-icons/bs";
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
 
-function CartIcon() {
+function CartIcon({ size }) {
 	const { openCartPopover } = useCartPopover();
 	const { totalItems } = useCart(useCart);
 
@@ -17,7 +17,7 @@ function CartIcon() {
 			cursor="pointer"
 			onClick={openCartPopover}
 		>
-			<BsCart size={30} />
+			<BsCart size={size} />
 			{totalItems ? (
 				<Center
 					position="absolute"

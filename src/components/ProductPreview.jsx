@@ -1,6 +1,16 @@
 import React from "react";
-import { Stack, Heading, Button, Image, Text, Flex } from "@chakra-ui/react";
+import {
+	Stack,
+	Heading,
+	Button,
+	Image,
+	Text,
+	Flex,
+	AspectRatio,
+	Box,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { numberToPrice } from "../utils";
 
 import useCart from "../hooks/useCart";
 import useCartPopover from "../hooks/useCartPopover";
@@ -14,20 +24,26 @@ function ProductPreview({ product }) {
 			padding="1em"
 			justifyContent="space-between"
 			boxShadow="md"
-			spacing={5}
+			spacing={4}
 		>
-			<Image
-				src={product.image}
-				alt={product.title}
-				boxSize="100%"
-				objectFit="contain"
-			/>
+			<AspectRatio ratio={1} width="100%">
+				<Box>
+					<Image
+						src={product.image}
+						alt={product.title}
+						height="100%"
+						objectFit="contain"
+					/>
+				</Box>
+			</AspectRatio>
 			<Heading as={Link} to={`/products/${product.id}`} size="sm">
 				{product.title}
 			</Heading>
-			<Text>${product.price}</Text>
+			<Text>${numberToPrice(product.price)}</Text>
 			<Flex gap={3}>
 				<Button
+					colorScheme="blue"
+					variant="outline"
 					as={Link}
 					to={`/products/${product.id}`}
 					flex={3}
@@ -36,6 +52,7 @@ function ProductPreview({ product }) {
 					Details
 				</Button>
 				<Button
+					colorScheme="blue"
 					flex={5}
 					onClick={() => {
 						addProduct(product.id, 1);

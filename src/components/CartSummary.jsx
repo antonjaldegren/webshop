@@ -9,6 +9,7 @@ import {
 	Center,
 	Button,
 } from "@chakra-ui/react";
+import { numberToPrice } from "../utils";
 
 import useCart from "../hooks/useCart";
 
@@ -32,17 +33,18 @@ function CartSummary() {
 			<Flex>
 				<Text>Subtotal</Text>
 				<Spacer />
-				<Text>${totalPrice}</Text>
+				<Text>${numberToPrice(totalPrice)}</Text>
 			</Flex>
 			<Box>
 				<Flex>
 					<Text>Shipping</Text>
 					<Spacer />
-					<Text>${shipping}</Text>
+					<Text>${numberToPrice(shipping)}</Text>
 				</Flex>
 				{totalPrice < 100 && (
-					<Text paddingLeft="5%" fontSize="sm" color="#FFAE42">
-						${99 - totalPrice} left to free shipping!
+					<Text paddingLeft="5%" fontSize="sm" color="gray.500">
+						${numberToPrice(100 - totalPrice)} left to free
+						shipping!
 					</Text>
 				)}
 			</Box>
@@ -55,10 +57,12 @@ function CartSummary() {
 			>
 				<Text>Total</Text>
 				<Spacer />
-				<Text>${totalPrice + shipping}</Text>
+				<Text>${numberToPrice(totalPrice + shipping)}</Text>
 			</Flex>
 			<Center padding="1em">
-				<Button padding="1em 2em">Checkout</Button>
+				<Button colorScheme="blue" padding="1em 2em">
+					Checkout
+				</Button>
 			</Center>
 		</Stack>
 	);

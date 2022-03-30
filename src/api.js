@@ -6,7 +6,7 @@ export async function getAllProducts() {
 		const response = await axios.get(
 			"https://k4backend.osuka.dev/products"
 		);
-		console.log("getAllProducts: ", response.data);
+		return response.data;
 	} catch (error) {
 		console.error(error);
 	}
@@ -25,8 +25,10 @@ export async function getSingleProduct(id) {
 
 export async function deleteProduct(id) {
 	try {
-		await axios.delete(`https://k4backend.osuka.dev/products/${id}`);
-		console.log("Product deleted!");
+		const response = await axios.delete(
+			`https://k4backend.osuka.dev/products/${id}`
+		);
+		return response.data;
 	} catch (err) {
 		console.error(err);
 	}
@@ -55,9 +57,10 @@ export async function getAllCarts() {
 }
 
 export async function getUserCart(id) {
+	// FIX URL
 	try {
 		const response = await axios.get(
-			`https://k4backend.osuka.dev/carts/${id}`
+			`https://k4backend.osuka.dev/carts/user/${id}`
 		);
 		console.log("getUserCart: ", response.data);
 	} catch (err) {
@@ -80,7 +83,7 @@ export async function getSingleUser(id) {
 		const response = await axios.get(
 			`https://k4backend.osuka.dev/users/${id}`
 		);
-		console.log("getSingleUser: ", response.data);
+		return response.data;
 	} catch (err) {
 		console.error(err);
 	}
@@ -92,7 +95,19 @@ export async function addNewUser(userData) {
 			"https://k4backend.osuka.dev/users",
 			userData
 		);
-		console.log("addNewUser: ", response.data);
+		return response.data;
+	} catch (err) {
+		console.error(err);
+	}
+}
+
+export async function updateUser(id, userData) {
+	try {
+		const response = await axios.put(
+			`https://k4backend.osuka.dev/users/${id}`,
+			userData
+		);
+		return response.data;
 	} catch (err) {
 		console.error(err);
 	}
@@ -105,7 +120,7 @@ export async function login(credentials) {
 			"https://k4backend.osuka.dev/auth/login",
 			credentials
 		);
-		console.log("login: ", response.data);
+		return response.data;
 	} catch (err) {
 		console.error(err);
 	}

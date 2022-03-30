@@ -12,7 +12,9 @@ import {
 	Image,
 	AspectRatio,
 } from "@chakra-ui/react";
+import { BsTrash } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { numberToPrice } from "../utils";
 
 import useProducts from "../hooks/useProducts";
 import useCart from "../hooks/useCart";
@@ -45,16 +47,22 @@ function CartItem({ data: { id, quantity } }) {
 				>
 					{product.title}
 				</Heading>
-				<Text
-					onClick={() => removeProductFromCart(id)}
-					textDecoration="underline"
-					cursor="pointer"
-				>
-					Remove item
-				</Text>
+				<Box>
+					<Button
+						size="sm"
+						colorScheme="blue"
+						variant="outline"
+						leftIcon={<BsTrash />}
+						onClick={() => removeProductFromCart(id)}
+					>
+						Remove
+					</Button>
+				</Box>
 				<Flex>
 					<HStack direction="column">
 						<Button
+							colorScheme="blue"
+							variant="outline"
 							disabled={quantity === 1}
 							onClick={() => changeQuantity(id, quantity - 1)}
 						>
@@ -62,13 +70,17 @@ function CartItem({ data: { id, quantity } }) {
 						</Button>
 						<Center width={7}>{quantity}</Center>
 						<Button
+							colorScheme="blue"
+							variant="outline"
 							onClick={() => changeQuantity(id, quantity + 1)}
 						>
 							+
 						</Button>
 					</HStack>
 					<Spacer></Spacer>
-					<Center fontSize="lg">${product.price * quantity}</Center>
+					<Center fontSize="lg">
+						${numberToPrice(product.price * quantity)}
+					</Center>
 				</Flex>
 			</VStack>
 		</HStack>
