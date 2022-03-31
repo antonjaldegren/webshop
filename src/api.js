@@ -114,7 +114,7 @@ export async function updateUser(id, userData) {
 }
 
 // LOGIN
-export async function login(credentials) {
+export async function loginApi(credentials) {
 	try {
 		const response = await axios.post(
 			"https://k4backend.osuka.dev/auth/login",

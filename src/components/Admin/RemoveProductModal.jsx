@@ -12,8 +12,8 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { BsTrash } from "react-icons/bs";
-import useProducts from "../hooks/useProducts";
-import useCart from "../hooks/useCart";
+import useProducts from "../../hooks/useProducts";
+import useCart from "../../hooks/useCart";
 
 function RemoveProductModal({ product }) {
 	const { removeProduct } = useProducts();

@@ -1,5 +1,4 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
 import {
 	AccordionItem,
 	AccordionButton,
@@ -7,11 +6,13 @@ import {
 	AccordionIcon,
 	Box,
 } from "@chakra-ui/react";
-import { cartsState } from "../recoil/carts/atom";
-import AdminCart from "../components/AdminCart";
+import { useRecoilValue } from "recoil";
+import { cartsState } from "../../recoil/carts/atom";
+import AdminCart from "./AdminCart";
 
 function AdminCarts() {
 	const carts = useRecoilValue(cartsState);
+
 	return (
 		<AccordionItem>
 			<AccordionButton>

@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { useRecoilValue } from "recoil";
+import React from "react";
 import {
 	Accordion,
 	AccordionItem,
@@ -9,12 +7,10 @@ import {
 	AccordionIcon,
 	Box,
 } from "@chakra-ui/react";
-import useProducts from "../hooks/useProducts";
-import { cartsState } from "../recoil/carts/atom";
-import AdminProduct from "../components/AdminProduct";
+import useProducts from "../../hooks/useProducts";
+import AdminProduct from "./AdminProduct";
 
 function AdminProducts() {
-	const carts = useRecoilValue(cartsState);
 	const { products } = useProducts();
 	return (
 		<AccordionItem>

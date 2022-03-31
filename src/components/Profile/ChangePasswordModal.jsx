@@ -16,10 +16,10 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { BsShieldLock } from "react-icons/bs";
-import { updateUser } from "../api";
-import { authState } from "../recoil/auth/atom";
-import InputError from "./InputError";
-import PasswordInput from "./PasswordInput";
+import { updateUser } from "../../api";
+import { authState } from "../../recoil/auth/atom";
+import InputError from "../InputError";
+import PasswordInput from "../PasswordInput";
 
 function ChangePasswordModal() {
 	const [oldPassword, setOldPassword] = useState("");

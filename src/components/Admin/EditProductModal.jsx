@@ -24,7 +24,8 @@ import { BsPencilSquare } from "react-icons/bs";
 import { BsLink45Deg } from "react-icons/bs";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { isEqual } from "lodash";
-import useProducts from "../hooks/useProducts";
+import useProducts from "../../hooks/useProducts";
+import { isPrice } from "../../utils";
 
 function EditProductModal({ product }) {
 	const [editedProduct, setEditedProduct] = useState(product);
@@ -33,14 +34,13 @@ function EditProductModal({ product }) {
 	const { editProduct } = useProducts();
 
 	function saveEdit() {
-		editProduct(editedProduct);
+		editProduct({ ...editedProduct, price: Number(editedProduct.price) });
 	}
 
 	function handleInputChange(input, key) {
 		const newDataObj = { ...editedProduct };
 		newDataObj[key] = input;
 		setEditedProduct(newDataObj);
-		console.log(editedProduct);
 	}
 
 	function resetChanges() {
@@ -104,12 +104,14 @@ function EditProductModal({ product }) {
 										<Input
 											id="price"
 											value={editedProduct.price}
-											onChange={(e) =>
+											onChange={(e) => {
+												if (!isPrice(e.target.value))
+													return;
 												handleInputChange(
 													e.target.value,
 													"price"
-												)
-											}
+												);
+											}}
 										/>
 									</InputGroup>
 								</Box>

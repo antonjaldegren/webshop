@@ -17,12 +17,12 @@ import {
 	VStack,
 	Spacer,
 } from "@chakra-ui/react";
-import { numberToPrice } from "../utils";
+import { numberToPrice } from "../../utils";
 
-import useCart from "../hooks/useCart";
-import useCartPopover from "../hooks/useCartPopover";
+import useCart from "../../hooks/useCart";
 import CartItemPreview from "./CartItemPreview";
 import CartIcon from "./CartIcon";
+import useCartPopover from "../../hooks/useCartPopover";
 
 function CartPopover() {
 	const { isOpen, closeCartPopover, openCartPopover } = useCartPopover();

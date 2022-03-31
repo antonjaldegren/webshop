@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
 import {
 	Accordion,
 	AccordionItem,
@@ -12,11 +11,11 @@ import {
 	Box,
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
-import { usersState } from "../recoil/users/atom";
 import AdminUser from "./AdminUser";
+import useUsers from "../../hooks/useUsers";
 
 function AdminUsers() {
-	const users = useRecoilValue(usersState);
+	const { users } = useUsers();
 	const [input, setInput] = useState("");
 
 	return (

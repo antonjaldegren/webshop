@@ -1,8 +1,8 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Container, Center } from "@chakra-ui/react";
 
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import AnimatedPage from "./components/AnimatedPage";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -13,29 +13,28 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
-import { useRecoilValue } from "recoil";
-import { authState } from "./recoil/auth/atom";
+import useAuth from "./hooks/useAuth";
 
 function App() {
-	const auth = useRecoilValue(authState);
+	const { user, token } = useAuth();
 
 	return (
 		<>
-			<Suspense fallback={<p>Loading...</p>}>
-				<Header />
-				<Container
-					paddingX={4}
-					paddingY="5em"
-					maxW="container.xl"
-					minH="100vh"
-				>
+			<Header />
+			<Container
+				paddingX={4}
+				paddingY="5em"
+				maxW="container.xl"
+				minH="100vh"
+			>
+				<Suspense fallback={<p>Loading...</p>}>
 					<AnimatedPage>
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/products" element={<Products />} />
 							<Route path="/products/:id" element={<Product />} />
 							<Route path="/cart" element={<Cart />} />
-							{auth.token ? (
+							{token ? (
 								<Route path="/profile" element={<Profile />} />
 							) : (
 								<>
@@ -46,17 +45,17 @@ function App() {
 									/>
 								</>
 							)}
-							{auth.user.role === "admin" && (
+							{user.role === "admin" && (
 								<Route path="/admin" element={<Admin />} />
 							)}
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</AnimatedPage>
-				</Container>
-				<Center as="footer" bg="gray.100" paddingY={14}>
-					Footer
-				</Center>
-			</Suspense>
+				</Suspense>
+			</Container>
+			<Center as="footer" bg="gray.100" paddingY={14}>
+				Footer
+			</Center>
 		</>
 	);
 }

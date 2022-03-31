@@ -9,9 +9,9 @@ import {
 	Center,
 	Button,
 } from "@chakra-ui/react";
-import { numberToPrice } from "../utils";
+import { numberToPrice } from "../../utils";
 
-import useCart from "../hooks/useCart";
+import useCart from "../../hooks/useCart";
 
 function CartSummary() {
 	const [shipping, setShipping] = useState(9);

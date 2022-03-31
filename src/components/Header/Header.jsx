@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Text, Flex, HStack } from "@chakra-ui/react";
+import { Box, Button, Text, Flex, HStack, Spinner } from "@chakra-ui/react";
 
 import LoginPopover from "./LoginPopover";
 import CartPopover from "./CartPopover";
@@ -41,10 +41,14 @@ function Header() {
 						Products
 					</Button>
 					<Box>
-						<LoginPopover />
+						<Suspense fallback={<Spinner />}>
+							<LoginPopover />
+						</Suspense>
 					</Box>
 					<Box>
-						<CartPopover />
+						<Suspense fallback={<Spinner />}>
+							<CartPopover />
+						</Suspense>
 					</Box>
 				</HStack>
 			</Flex>

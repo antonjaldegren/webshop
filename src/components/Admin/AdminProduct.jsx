@@ -12,6 +12,7 @@ import {
 	Box,
 	Heading,
 } from "@chakra-ui/react";
+import { numberToPrice } from "../../utils";
 import RemoveProductModal from "./RemoveProductModal";
 import EditProductModal from "./EditProductModal";
 
@@ -37,7 +38,7 @@ function AdminProduct({ product }) {
 						</Flex>
 					</Flex>
 					<Text>Title: {product.title}</Text>
-					<Text>Price: ${product.price}</Text>
+					<Text>Price: ${numberToPrice(product.price)}</Text>
 					<Text>Description: {product.description}</Text>
 					<Text>
 						Image:{" "}

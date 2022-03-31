@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Text, Center } from "@chakra-ui/react";
 import { BsCart } from "react-icons/bs";
 
-import useCart from "../hooks/useCart";
-import useCartPopover from "../hooks/useCartPopover";
+import useCart from "../../hooks/useCart";
+import useCartPopover from "../../hooks/useCartPopover";
 
 function CartIcon({ size }) {
 	const { openCartPopover } = useCartPopover();

@@ -10,10 +10,10 @@ import {
 	Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { numberToPrice } from "../utils";
+import { numberToPrice } from "../../utils";
 
-import useCart from "../hooks/useCart";
-import useCartPopover from "../hooks/useCartPopover";
+import useCart from "../../hooks/useCart";
+import useCartPopover from "../../hooks/useCartPopover";
 
 function ProductPreview({ product }) {
 	const { addProduct } = useCart();

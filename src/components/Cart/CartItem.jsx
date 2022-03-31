@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import {
 	Flex,
 	Spacer,
-	Text,
 	Box,
 	Button,
 	Heading,
@@ -14,16 +13,16 @@ import {
 } from "@chakra-ui/react";
 import { BsTrash } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { numberToPrice } from "../utils";
+import { numberToPrice } from "../../utils";
 
-import useProducts from "../hooks/useProducts";
-import useCart from "../hooks/useCart";
+import useProducts from "../../hooks/useProducts";
+import useCart from "../../hooks/useCart";
 
 function CartItem({ data: { id, quantity } }) {
 	const { getProductById } = useProducts();
 	const { changeQuantity, removeProductFromCart } = useCart();
 
-	const product = useMemo(() => getProductById(id), []);
+	const product = useMemo(() => getProductById(id), [id]);
 
 	return (
 		<HStack boxShadow="md" padding="1.5em" spacing={6}>

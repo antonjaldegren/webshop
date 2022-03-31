@@ -16,13 +16,11 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 import { BsPerson } from "react-icons/bs";
-import { useRecoilValue } from "recoil";
-import { useResetRecoilState } from "recoil";
-import { authState } from "../recoil/auth/atom";
+import { BsPersonFill } from "react-icons/bs";
+import useAuth from "../../hooks/useAuth";
 
 function LoginPopover() {
-	const auth = useRecoilValue(authState);
-	const resetAuthState = useResetRecoilState(authState);
+	const { user, token, logout } = useAuth();
 	const { onOpen, onClose, isOpen } = useDisclosure();
 
 	return (
@@ -38,16 +36,24 @@ function LoginPopover() {
 					variant="ghost"
 					size="md"
 					aria-label="Profile"
-					icon={<BsPerson size={30} />}
+					icon={
+						token ? (
+							<BsPersonFill size={30} />
+						) : (
+							<BsPerson size={30} />
+						)
+					}
 				/>
 			</PopoverTrigger>
-			<PopoverContent maxW="175px">
+			<PopoverContent maxW="225px">
 				<PopoverArrow />
-				<PopoverHeader>Profile</PopoverHeader>
+				<PopoverHeader>
+					{token ? `Welcome, ${user.name.firstname}!` : "Profile"}
+				</PopoverHeader>
 				<PopoverCloseButton />
 				<PopoverBody>
 					<VStack spacing={1} alignItems="stretch">
-						{!auth.token ? (
+						{!token ? (
 							<>
 								<Button
 									as={Link}
@@ -71,7 +77,7 @@ function LoginPopover() {
 								</Button>
 							</>
 						) : null}
-						{auth.token ? (
+						{token ? (
 							<>
 								<Button
 									as={Link}
@@ -89,16 +95,16 @@ function LoginPopover() {
 									variant="ghost"
 									onClick={() => {
 										onClose();
-										resetAuthState();
+										logout();
 									}}
 								>
-									Logout
+									Log out
 								</Button>
 							</>
 						) : null}
 					</VStack>
 				</PopoverBody>
-				{auth.user.role === "admin" ? (
+				{user.role === "admin" ? (
 					<PopoverFooter>
 						<Flex flexDirection="column" alignItems="stretch">
 							<Button

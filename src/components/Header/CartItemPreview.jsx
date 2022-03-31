@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import { Box, Text, Flex, Spacer } from "@chakra-ui/react";
-import { numberToPrice } from "../utils";
+import { numberToPrice } from "../../utils";
 
-import useProducts from "../hooks/useProducts";
+import useProducts from "../../hooks/useProducts";
 
 function CartItemPreview({ item }) {
-	const { getProductById } = useProducts();
+	const { products, getProductById } = useProducts();
 
-	const product = useMemo(() => getProductById(item.id), []);
+	const product = useMemo(() => getProductById(item.id), [products]);
 
 	return (
 		<Flex fontSize="sm" w="100%">

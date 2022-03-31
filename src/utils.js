@@ -4,3 +4,7 @@ export function numberToPrice(num) {
 		maximumFractionDigits: 2,
 	});
 }
+
+export function isPrice(input) {
+	return /^\d*\.?\d{0,2}$/.test(input);
+}

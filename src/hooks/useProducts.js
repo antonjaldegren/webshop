@@ -24,10 +24,13 @@ export default function useProducts() {
 	}
 
 	function editProduct(editedProduct) {
-		updateProduct(editedProduct).then((data) =>
-			setProducts(products.map((product) => product.id))
+		updateProduct(editedProduct).then((newProduct) =>
+			setProducts(
+				products.map((product) =>
+					product.id === newProduct.id ? newProduct : product
+				)
+			)
 		);
-		// Continue here
 	}
 
 	return {

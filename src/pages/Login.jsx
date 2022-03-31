@@ -13,34 +13,30 @@ import {
 	Center,
 	Heading,
 } from "@chakra-ui/react";
-import { useSetRecoilState } from "recoil";
-import { authState } from "../recoil/auth/atom";
-import { login, getSingleUser } from "../api";
 import AnimatedPage from "../components/AnimatedPage";
 import PasswordInput from "../components/PasswordInput";
 import InputError from "../components/InputError";
+import useAuth from "../hooks/useAuth";
 
 function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [loginHasFailed, setLoginHasFailed] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
-	const setAuth = useSetRecoilState(authState);
+	const { login } = useAuth();
 	const navigate = useNavigate();
 
 	async function handleLogin() {
-		const loginData = await login({
-			username: username,
-			password: password,
-		});
+		setIsLoading(true);
+		const response = await login(username, password);
+		setIsLoading(false);
 
-		if (!loginData) {
+		if (response === "error") {
 			setLoginHasFailed(true);
 			return;
 		}
 
-		const userData = await getSingleUser(loginData.userId);
-		setAuth({ token: loginData.token, user: userData });
 		navigate("/");
 	}
 
@@ -87,7 +83,11 @@ function Login() {
 							>
 								Register
 							</Button>
-							<Button colorScheme="blue" onClick={handleLogin}>
+							<Button
+								isLoading={isLoading}
+								colorScheme="blue"
+								onClick={handleLogin}
+							>
 								Login
 							</Button>
 						</SimpleGrid>

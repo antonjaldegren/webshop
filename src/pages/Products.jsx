@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { Heading, Stack, SimpleGrid, Tag, Flex } from "@chakra-ui/react";
+import { Heading, Stack, Box, Tag, Flex } from "@chakra-ui/react";
 import { useSearchParams, Link } from "react-router-dom";
 
 import useProducts from "../hooks/useProducts";
-import ProductPreview from "../components/ProductPreview";
-import CategoryLink from "../components/CategoryLink";
+import ProductPreview from "../components/Products/ProductPreview";
+import CategoryLink from "../components/Products/CategoryLink";
 import AnimatedPage from "../components/AnimatedPage";
 
 function Products() {
@@ -42,11 +42,15 @@ function Products() {
 						</CategoryLink>
 					))}
 				</Flex>
-				<SimpleGrid minChildWidth="200px" spacing={4}>
+				<Box
+					display="grid"
+					gridTemplateColumns="repeat(auto-fill, minmax(220px, 1fr))"
+					gap={5}
+				>
 					{currentProducts.map((product) => (
 						<ProductPreview key={product.id} product={product} />
 					))}
-				</SimpleGrid>
+				</Box>
 			</Stack>
 		</AnimatedPage>
 	);

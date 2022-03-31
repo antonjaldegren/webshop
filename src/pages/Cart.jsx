@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { Heading, Spacer, Flex, Text, Stack, Button } from "@chakra-ui/react";
 import AnimatedPage from "../components/AnimatedPage";
 import useCart from "../hooks/useCart";
-import CartItem from "../components/CartItem";
-import CartSummary from "../components/CartSummary";
+import CartItem from "../components/Cart/CartItem";
+import CartSummary from "../components/Cart/CartSummary";
 
 function Cart() {
 	const { cart, totalItems, resetCart } = useCart();
