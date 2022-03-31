@@ -28,21 +28,20 @@ function Login() {
 	const setAuth = useSetRecoilState(authState);
 	const navigate = useNavigate();
 
-	function handleLogin() {
-		login({
+	async function handleLogin() {
+		const loginData = await login({
 			username: username,
 			password: password,
-		}).then((loginData) => {
-			if (loginData) {
-				getSingleUser(loginData.userId).then((userData) => {
-					console.log(userData);
-					setAuth({ token: loginData.token, user: userData });
-					navigate("/");
-				});
-				return;
-			}
-			setLoginHasFailed(true);
 		});
+
+		if (!loginData) {
+			setLoginHasFailed(true);
+			return;
+		}
+
+		const userData = await getSingleUser(loginData.userId);
+		setAuth({ token: loginData.token, user: userData });
+		navigate("/");
 	}
 
 	return (

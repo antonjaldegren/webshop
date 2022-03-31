@@ -34,13 +34,13 @@ export async function deleteProduct(id) {
 	}
 }
 
-export async function updateProduct(id, productData) {
+export async function updateProduct(product) {
 	try {
 		const response = await axios.put(
-			`https://k4backend.osuka.dev/products/${id}`,
-			productData
+			`https://k4backend.osuka.dev/products/${product.id}`,
+			product
 		);
-		console.log("updateProduct: ", response.data);
+		return response.data;
 	} catch (err) {
 		console.error(err);
 	}
@@ -72,7 +72,7 @@ export async function getUserCart(id) {
 export async function getAllUsers() {
 	try {
 		const response = await axios.get("https://k4backend.osuka.dev/users");
-		console.log("getAllUsers: ", response.data);
+		return response.data;
 	} catch (err) {
 		console.error(err);
 	}

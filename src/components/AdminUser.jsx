@@ -1,36 +1,34 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
-import { useRecoilValue } from "recoil";
-import { authState } from "../recoil/auth/atom";
 import {
-	Heading,
+	AccordionItem,
+	AccordionButton,
+	AccordionPanel,
+	AccordionIcon,
+	Box,
 	Text,
 	Table,
-	Stack,
 	Tbody,
 	Tr,
 	Th,
 	Td,
-	HStack,
 } from "@chakra-ui/react";
-import EditUserModal from "../components/EditUserModal";
-import ChangePasswordModal from "../components/ChangePasswordModal";
-import AnimatedPage from "../components/AnimatedPage";
 
-function Profile() {
-	const { user } = useRecoilValue(authState);
-
+function AdminUser({ user }) {
 	return (
-		<AnimatedPage>
-			<Helmet>
-				<title>Webshop | Profile</title>
-			</Helmet>
-			<Stack spacing={5}>
-				<Heading>My Profile</Heading>
-				<HStack>
-					<EditUserModal user={user} />
-					<ChangePasswordModal user={user} />
-				</HStack>
+		<AccordionItem key={user.id}>
+			<AccordionButton>
+				<Box
+					as="h2"
+					fontWeight="bold"
+					fontSize="lg"
+					flex="1"
+					textAlign="left"
+				>
+					{user.username}
+				</Box>
+				<AccordionIcon />
+			</AccordionButton>
+			<AccordionPanel pb={4}>
 				<Table>
 					<Tbody>
 						<Tr>
@@ -44,6 +42,10 @@ function Profile() {
 						<Tr>
 							<Th>Username</Th>
 							<Td>{user.username}</Td>
+						</Tr>
+						<Tr>
+							<Th>Password</Th>
+							<Td>{user.password}</Td>
 						</Tr>
 						<Tr>
 							<Th>Email</Th>
@@ -62,11 +64,15 @@ function Profile() {
 								<Text>{user.address.zipcode}</Text>
 							</Td>
 						</Tr>
+						<Tr>
+							<Th>Id</Th>
+							<Td>{user.id}</Td>
+						</Tr>
 					</Tbody>
 				</Table>
-			</Stack>
-		</AnimatedPage>
+			</AccordionPanel>
+		</AccordionItem>
 	);
 }
 
-export default Profile;
+export default AdminUser;

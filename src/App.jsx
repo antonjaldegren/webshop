@@ -1,18 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Container, Center } from "@chakra-ui/react";
-import {
-	getAllProducts,
-	getSingleProduct,
-	deleteProduct,
-	updateProduct,
-	getAllCarts,
-	getUserCart,
-	getAllUsers,
-	addNewUser,
-	getSingleUser,
-	login,
-} from "./api";
 
 import Header from "./components/Header";
 import AnimatedPage from "./components/AnimatedPage";
@@ -30,44 +18,6 @@ import { authState } from "./recoil/auth/atom";
 
 function App() {
 	const auth = useRecoilValue(authState);
-
-	useEffect(() => {
-		// getAllProducts();
-		// getSingleProduct(2);
-		// deleteProduct(2);
-		// getAllCarts().then((data) => console.log(data));
-		// getUserCart(1).then((data) => console.log(data));
-		// getAllUsers();
-		// getSingleUser(7);
-		// login({
-		// 	username: "mor_2314",
-		// 	password: "83r5^_",
-		// });
-		// addNewUser({
-		// 	email: "John@gmail.com",
-		// 	username: "johnd",
-		// 	password: "m38rmF$",
-		// 	role: "user",
-		// 	name: {
-		// 		firstname: "John",
-		// 		lastname: "Doe",
-		// 	},
-		// 	address: {
-		// 		city: "kilcoole",
-		// 		street: "7835 new road",
-		// 		number: 3,
-		// 		zipcode: "12926-3874",
-		// 	},
-		// 	phone: "1-570-236-7033",
-		// }).then((data) => console.log(data));
-		// updateProduct(4, {
-		// 	title: "test product",
-		// 	price: 13.5,
-		// 	description: "lorem ipsum set",
-		// 	image: "https://i.pravatar.cc",
-		// 	category: "electronic",
-		// });
-	}, []);
 
 	return (
 		<>

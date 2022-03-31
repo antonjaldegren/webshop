@@ -8,7 +8,7 @@ function getCartsEffect() {
 }
 
 export const cartsState = atom({
-	key: "usersState",
+	key: "cartsState",
 	default: [],
 	effects: [getCartsEffect()],
 });

@@ -17,7 +17,6 @@ import {
 	Stack,
 	Flex,
 	Spacer,
-	Tooltip,
 	Text,
 	Box,
 } from "@chakra-ui/react";
@@ -25,16 +24,23 @@ import { BsPencilSquare } from "react-icons/bs";
 import { BsLink45Deg } from "react-icons/bs";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { isEqual } from "lodash";
+import useProducts from "../hooks/useProducts";
 
 function EditProductModal({ product }) {
 	const [editedProduct, setEditedProduct] = useState(product);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
+	const { editProduct } = useProducts();
+
+	function saveEdit() {
+		editProduct(editedProduct);
+	}
 
 	function handleInputChange(input, key) {
 		const newDataObj = { ...editedProduct };
 		newDataObj[key] = input;
 		setEditedProduct(newDataObj);
+		console.log(editedProduct);
 	}
 
 	function resetChanges() {
@@ -173,8 +179,7 @@ function EditProductModal({ product }) {
 							<Button
 								colorScheme="blue"
 								onClick={() => {
-									// removeProductFromCart(product.id);
-									// removeProduct(product.id);
+									saveEdit();
 									onClose();
 								}}
 								ml={3}

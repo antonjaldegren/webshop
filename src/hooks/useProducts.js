@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { productsState } from "../recoil/products/atom";
-import { deleteProduct } from "../api";
+import { deleteProduct, updateProduct } from "../api";
 
 export default function useProducts() {
 	const [products, setProducts] = useRecoilState(productsState);
@@ -19,9 +19,15 @@ export default function useProducts() {
 
 	function removeProduct(id) {
 		deleteProduct(id).then((data) => {
-			console.log(data);
 			setProducts(products.filter((product) => product.id !== data.id));
 		});
+	}
+
+	function editProduct(editedProduct) {
+		updateProduct(editedProduct).then((data) =>
+			setProducts(products.map((product) => product.id))
+		);
+		// Continue here
 	}
 
 	return {
@@ -30,5 +36,6 @@ export default function useProducts() {
 		getProductById,
 		getProductsByCategory,
 		removeProduct,
+		editProduct,
 	};
 }
