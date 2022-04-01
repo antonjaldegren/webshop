@@ -21,7 +21,13 @@ function AdminProduct({ product }) {
 		<AccordionItem key={`adminProduct${product.id}`}>
 			<h2>
 				<AccordionButton>
-					<Box flex="1" textAlign="left">
+					<Box
+						as="h2"
+						fontWeight="bold"
+						fontSize="lg"
+						flex="1"
+						textAlign="left"
+					>
 						{product.title}
 					</Box>
 					<AccordionIcon />

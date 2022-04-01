@@ -24,8 +24,8 @@ import { BsPencilSquare } from "react-icons/bs";
 import { BsLink45Deg } from "react-icons/bs";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { isEqual } from "lodash";
-import useProducts from "../../hooks/useProducts";
 import { isPrice } from "../../utils";
+import useProducts from "../../hooks/useProducts";
 
 function EditProductModal({ product }) {
 	const [editedProduct, setEditedProduct] = useState(product);

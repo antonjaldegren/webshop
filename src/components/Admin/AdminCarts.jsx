@@ -4,6 +4,7 @@ import {
 	AccordionButton,
 	AccordionPanel,
 	AccordionIcon,
+	Accordion,
 	Box,
 } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
@@ -28,9 +29,11 @@ function AdminCarts() {
 				<AccordionIcon />
 			</AccordionButton>
 			<AccordionPanel pb={4}>
-				{carts.map((cart) => (
-					<AdminCart key={cart.id} cart={cart} />
-				))}
+				<Accordion allowToggle>
+					{carts.map((cart) => (
+						<AdminCart key={cart.id} cart={cart} />
+					))}
+				</Accordion>
 			</AccordionPanel>
 		</AccordionItem>
 	);

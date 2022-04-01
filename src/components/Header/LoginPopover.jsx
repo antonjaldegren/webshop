@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
 	Flex,
 	Button,
@@ -22,6 +22,8 @@ import useAuth from "../../hooks/useAuth";
 function LoginPopover() {
 	const { user, token, logout } = useAuth();
 	const { onOpen, onClose, isOpen } = useDisclosure();
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 
 	return (
 		<Popover
@@ -76,8 +78,7 @@ function LoginPopover() {
 									Register
 								</Button>
 							</>
-						) : null}
-						{token ? (
+						) : (
 							<>
 								<Button
 									as={Link}
@@ -96,12 +97,17 @@ function LoginPopover() {
 									onClick={() => {
 										onClose();
 										logout();
+										if (
+											pathname === "/profile" ||
+											pathname === "/admin"
+										)
+											navigate("/");
 									}}
 								>
 									Log out
 								</Button>
 							</>
-						) : null}
+						)}
 					</VStack>
 				</PopoverBody>
 				{user.role === "admin" ? (
