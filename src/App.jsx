@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Container, Center } from "@chakra-ui/react";
 
+import SkeletonPage from "./components/SkeletonPage";
 import Header from "./components/Header/Header";
 import AnimatedPage from "./components/AnimatedPage";
 import Home from "./pages/Home";
@@ -23,11 +24,11 @@ function App() {
 			<Header />
 			<Container
 				paddingX={4}
-				paddingY="5em"
+				paddingY="6em"
 				maxW="container.xl"
 				minH="100vh"
 			>
-				<Suspense fallback={<p>Loading...</p>}>
+				<Suspense fallback={<SkeletonPage />}>
 					<AnimatedPage>
 						<Routes>
 							<Route path="/" element={<Home />} />

@@ -23,7 +23,7 @@ function Profile() {
 	return (
 		<AnimatedPage>
 			<Helmet>
-				<title>Webshop | Profile</title>
+				<title>Webshop | PROFILE</title>
 			</Helmet>
 			<Center>
 				<Stack spacing={5} boxShadow="md" p={7}>

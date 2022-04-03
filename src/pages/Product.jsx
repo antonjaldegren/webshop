@@ -44,7 +44,7 @@ function product() {
 	return (
 		<AnimatedPage>
 			<Helmet>
-				<title>Webshop | {product.title}</title>
+				<title>Webshop | {product.title.toUpperCase()}</title>
 			</Helmet>
 			<Stack direction={["column", "column", "row"]} spacing="5%">
 				<Box w={["100%", "100%", "50%"]}>

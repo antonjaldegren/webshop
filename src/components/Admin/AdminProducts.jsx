@@ -1,39 +1,33 @@
-import React from "react";
-import {
-	Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionPanel,
-	AccordionIcon,
-	Box,
-} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Accordion } from "@chakra-ui/react";
 import useProducts from "../../hooks/useProducts";
 import AdminProduct from "./AdminProduct";
+import SearchField from "./SearchField";
 
 function AdminProducts() {
+	const [input, setInput] = useState("");
+	const [filteredProducts, setFilteredProducts] = useState([]);
 	const { products } = useProducts();
+
+	useEffect(
+		() =>
+			setFilteredProducts(
+				products.filter((product) =>
+					product.title.toLowerCase().includes(input.toLowerCase())
+				)
+			),
+		[input]
+	);
+
 	return (
-		<AccordionItem>
-			<AccordionButton>
-				<Box
-					as="h2"
-					fontWeight="bold"
-					fontSize="lg"
-					flex="1"
-					textAlign="left"
-				>
-					Products
-				</Box>
-				<AccordionIcon />
-			</AccordionButton>
-			<AccordionPanel pb={4}>
-				<Accordion allowToggle>
-					{products.map((product) => (
-						<AdminProduct key={product.id} product={product} />
-					))}
-				</Accordion>
-			</AccordionPanel>
-		</AccordionItem>
+		<>
+			<SearchField value={input} onChange={setInput} />
+			<Accordion allowToggle>
+				{filteredProducts.map((product) => (
+					<AdminProduct key={product.id} product={product} />
+				))}
+			</Accordion>
+		</>
 	);
 }
 

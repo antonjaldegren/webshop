@@ -21,6 +21,8 @@ function CartSummary() {
 
 	return (
 		<Stack
+			position={["static", "static", "sticky"]}
+			top={["unset", "unset", "5em"]}
 			padding="1.5em"
 			spacing={4}
 			boxShadow="md"

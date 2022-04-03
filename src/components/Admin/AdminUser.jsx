@@ -2,7 +2,6 @@ import React from "react";
 import {
 	AccordionItem,
 	AccordionButton,
-	AccordionPanel,
 	AccordionIcon,
 	Box,
 	Text,
@@ -12,6 +11,7 @@ import {
 	Th,
 	Td,
 } from "@chakra-ui/react";
+import AccordionPanel from "./AccordionPanel";
 
 function AdminUser({ user }) {
 	return (

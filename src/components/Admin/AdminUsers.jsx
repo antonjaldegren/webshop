@@ -1,64 +1,33 @@
-import React, { useState } from "react";
-import {
-	Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionPanel,
-	AccordionIcon,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	Box,
-} from "@chakra-ui/react";
-import { BsSearch } from "react-icons/bs";
+import React, { useState, useEffect } from "react";
+import { Accordion } from "@chakra-ui/react";
 import AdminUser from "./AdminUser";
 import useUsers from "../../hooks/useUsers";
+import SearchField from "./SearchField";
 
 function AdminUsers() {
 	const { users } = useUsers();
 	const [input, setInput] = useState("");
+	const [filteredUsers, setFilteredUsers] = useState([]);
+
+	useEffect(
+		() =>
+			setFilteredUsers(
+				users.filter((user) =>
+					user.username.toLowerCase().includes(input.toLowerCase())
+				)
+			),
+		[input]
+	);
 
 	return (
-		<AccordionItem>
-			<AccordionButton>
-				<Box
-					as="h2"
-					fontWeight="bold"
-					fontSize="lg"
-					flex="1"
-					textAlign="left"
-				>
-					Users
-				</Box>
-				<AccordionIcon />
-			</AccordionButton>
-			<AccordionPanel pb={4}>
-				<InputGroup mb={3} maxWidth="300px">
-					<InputLeftElement
-						pointerEvents="none"
-						color="gray.300"
-						children={<BsSearch />}
-					/>
-					<Input
-						value={input}
-						onChange={(e) => {
-							setInput(e.target.value);
-						}}
-					/>
-				</InputGroup>
-				<Accordion allowToggle>
-					{users
-						.filter((user) =>
-							user.username
-								.toLowerCase()
-								.includes(input.toLowerCase())
-						)
-						.map((user) => (
-							<AdminUser key={user.id} user={user} />
-						))}
-				</Accordion>
-			</AccordionPanel>
-		</AccordionItem>
+		<>
+			<SearchField value={input} onChange={setInput} />
+			<Accordion allowToggle>
+				{filteredUsers.map((user) => (
+					<AdminUser key={user.id} user={user} />
+				))}
+			</Accordion>
+		</>
 	);
 }
 

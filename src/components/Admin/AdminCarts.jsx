@@ -15,27 +15,11 @@ function AdminCarts() {
 	const carts = useRecoilValue(cartsState);
 
 	return (
-		<AccordionItem>
-			<AccordionButton>
-				<Box
-					as="h2"
-					fontWeight="bold"
-					fontSize="lg"
-					flex="1"
-					textAlign="left"
-				>
-					Carts
-				</Box>
-				<AccordionIcon />
-			</AccordionButton>
-			<AccordionPanel pb={4}>
-				<Accordion allowToggle>
-					{carts.map((cart) => (
-						<AdminCart key={cart.id} cart={cart} />
-					))}
-				</Accordion>
-			</AccordionPanel>
-		</AccordionItem>
+		<Accordion allowToggle>
+			{carts.map((cart) => (
+				<AdminCart key={cart.id} cart={cart} />
+			))}
+		</Accordion>
 	);
 }
 

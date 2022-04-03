@@ -7,7 +7,7 @@ function NotFound() {
 	return (
 		<AnimatedPage>
 			<Helmet>
-				<title>Webshop | Not found</title>
+				<title>Webshop | NOT FOUND</title>
 			</Helmet>
 			<Alert status="error" variant="left-accent" fontSize="lg">
 				<AlertIcon />

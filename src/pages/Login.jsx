@@ -43,7 +43,7 @@ function Login() {
 	return (
 		<AnimatedPage>
 			<Helmet>
-				<title>Webshop | Login</title>
+				<title>Webshop | LOGIN</title>
 			</Helmet>
 			<Center>
 				<FormControl maxWidth="container.sm">

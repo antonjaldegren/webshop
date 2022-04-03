@@ -53,10 +53,10 @@ function Register() {
 	return (
 		<AnimatedPage>
 			<Helmet>
-				<title>Webshop | Register</title>
+				<title>Webshop | REGISTER</title>
 			</Helmet>
 			<Center>
-				<FormControl maxWidth="500px">
+				<FormControl maxWidth="container.sm">
 					<Stack spacing={5} padding={5} boxShadow="md">
 						<Center>
 							<Heading as="h1">Register new user</Heading>

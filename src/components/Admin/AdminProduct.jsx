@@ -2,7 +2,6 @@ import React from "react";
 import {
 	AccordionItem,
 	AccordionButton,
-	AccordionPanel,
 	AccordionIcon,
 	Stack,
 	Flex,
@@ -15,6 +14,7 @@ import {
 import { numberToPrice } from "../../utils";
 import RemoveProductModal from "./RemoveProductModal";
 import EditProductModal from "./EditProductModal";
+import AccordionPanel from "./AccordionPanel";
 
 function AdminProduct({ product }) {
 	return (
@@ -33,7 +33,7 @@ function AdminProduct({ product }) {
 					<AccordionIcon />
 				</AccordionButton>
 			</h2>
-			<AccordionPanel borderLeft="10px solid" borderColor="gray.200">
+			<AccordionPanel>
 				<Stack spacing={4}>
 					<Flex align="center">
 						<Heading size="md">Details</Heading>

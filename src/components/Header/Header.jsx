@@ -1,9 +1,10 @@
 import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Text, Flex, HStack, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Spinner } from "@chakra-ui/react";
 
 import LoginPopover from "./LoginPopover";
 import CartPopover from "./CartPopover";
+import Logo from "./logo";
 
 function Header() {
 	return (
@@ -25,9 +26,9 @@ function Header() {
 				w="100%"
 				align="center"
 			>
-				<Text as={Link} to="/">
-					LOGO
-				</Text>
+				<Link to="/">
+					<Logo />
+				</Link>
 				<HStack as="nav" spacing="min(3vw, 50px)" align="center">
 					<Button
 						as={Link}

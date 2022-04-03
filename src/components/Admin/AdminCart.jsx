@@ -8,12 +8,12 @@ import {
 	Box,
 	UnorderedList,
 	AccordionItem,
-	AccordionPanel,
 	AccordionButton,
 	AccordionIcon,
 } from "@chakra-ui/react";
 import useUsers from "../../hooks/useUsers";
 import AdminCartProduct from "./AdminCartProduct";
+import AccordionPanel from "./AccordionPanel";
 
 function AdminCart({ cart }) {
 	const { getUserById } = useUsers();
@@ -29,7 +29,7 @@ function AdminCart({ cart }) {
 					flex="1"
 					textAlign="left"
 				>
-					Cart {cart.id}
+					Cart {cart.id} – {user.username}
 				</Box>
 				<AccordionIcon />
 			</AccordionButton>
@@ -49,7 +49,10 @@ function AdminCart({ cart }) {
 							<Td>
 								<UnorderedList>
 									{cart.products.map((product) => (
-										<AdminCartProduct product={product} />
+										<AdminCartProduct
+											key={product.productId}
+											product={product}
+										/>
 									))}
 								</UnorderedList>
 							</Td>
