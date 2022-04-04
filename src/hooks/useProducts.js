@@ -17,18 +17,18 @@ export default function useProducts() {
 		return products.filter((product) => product.category === category);
 	}
 
-	function removeProduct(id) {
-		deleteProduct(id).then((data) => {
-			setProducts(products.filter((product) => product.id !== data.id));
-		});
+	async function removeProduct(id) {
+		const data = await deleteProduct(id);
+
+		setProducts(products.filter((product) => product.id !== data.id));
 	}
 
-	function editProduct(editedProduct) {
-		updateProduct(editedProduct).then((newProduct) =>
-			setProducts(
-				products.map((product) =>
-					product.id === newProduct.id ? newProduct : product
-				)
+	async function editProduct(editedProduct) {
+		const newProduct = await updateProduct(editedProduct);
+
+		setProducts(
+			products.map((product) =>
+				product.id === newProduct.id ? newProduct : product
 			)
 		);
 	}

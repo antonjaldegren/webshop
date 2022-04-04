@@ -18,7 +18,6 @@ import {
 	Flex,
 	Spacer,
 	Text,
-	Box,
 } from "@chakra-ui/react";
 import { BsPencilSquare } from "react-icons/bs";
 import { BsLink45Deg } from "react-icons/bs";
@@ -29,12 +28,21 @@ import useProducts from "../../hooks/useProducts";
 
 function EditProductModal({ product }) {
 	const [editedProduct, setEditedProduct] = useState(product);
+	const [isLoading, setIsLoading] = useState(false);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
 	const { editProduct } = useProducts();
 
-	function handleSubmit() {
-		editProduct({ ...editedProduct, price: Number(editedProduct.price) });
+	async function handleSubmit(e) {
+		e.preventDefault();
+		console.log("submit");
+		setIsLoading(true);
+		await editProduct({
+			...editedProduct,
+			price: Number(editedProduct.price),
+		});
+		setIsLoading(false);
+		onClose();
 	}
 
 	function handleInputChange(input, key) {
@@ -80,13 +88,10 @@ function EditProductModal({ product }) {
 						</AlertDialogHeader>
 						<form onSubmit={handleSubmit}>
 							<AlertDialogBody>
-								<FormControl as={Stack} spacing={5}>
-									<Box>
-										<FormLabel htmlFor="title">
-											Title
-										</FormLabel>
+								<Stack spacing={5}>
+									<FormControl>
+										<FormLabel>Title</FormLabel>
 										<Input
-											id="title"
 											value={editedProduct.title}
 											onChange={(e) =>
 												handleInputChange(
@@ -95,11 +100,9 @@ function EditProductModal({ product }) {
 												)
 											}
 										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="price">
-											Price
-										</FormLabel>
+									</FormControl>
+									<FormControl>
+										<FormLabel>Price</FormLabel>
 										<InputGroup>
 											<InputLeftElement
 												pointerEvents="none"
@@ -107,7 +110,6 @@ function EditProductModal({ product }) {
 												children={<BsCurrencyDollar />}
 											/>
 											<Input
-												id="price"
 												value={editedProduct.price}
 												onChange={(e) => {
 													if (
@@ -121,14 +123,11 @@ function EditProductModal({ product }) {
 												}}
 											/>
 										</InputGroup>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="description">
-											Description
-										</FormLabel>
+									</FormControl>
+									<FormControl>
+										<FormLabel>Description</FormLabel>
 										<Textarea
 											minHeight="150px"
-											id="description"
 											value={editedProduct.description}
 											onChange={(e) =>
 												handleInputChange(
@@ -137,11 +136,9 @@ function EditProductModal({ product }) {
 												)
 											}
 										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="image">
-											Image
-										</FormLabel>
+									</FormControl>
+									<FormControl>
+										<FormLabel>Image</FormLabel>
 										<InputGroup>
 											<InputLeftElement
 												pointerEvents="none"
@@ -149,7 +146,6 @@ function EditProductModal({ product }) {
 												children={<BsLink45Deg />}
 											/>
 											<Input
-												id="image"
 												value={editedProduct.image}
 												onChange={(e) =>
 													handleInputChange(
@@ -159,13 +155,10 @@ function EditProductModal({ product }) {
 												}
 											/>
 										</InputGroup>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="category">
-											Category
-										</FormLabel>
+									</FormControl>
+									<FormControl>
+										<FormLabel>Category</FormLabel>
 										<Input
-											id="category"
 											value={editedProduct.category}
 											onChange={(e) =>
 												handleInputChange(
@@ -174,8 +167,8 @@ function EditProductModal({ product }) {
 												)
 											}
 										/>
-									</Box>
-								</FormControl>
+									</FormControl>
+								</Stack>
 							</AlertDialogBody>
 							<AlertDialogFooter>
 								<Button
@@ -187,7 +180,12 @@ function EditProductModal({ product }) {
 								>
 									Cancel
 								</Button>
-								<Button colorScheme="blue" type="submit" ml={3}>
+								<Button
+									colorScheme="blue"
+									isLoading={isLoading}
+									type="submit"
+									ml={3}
+								>
 									Save
 								</Button>
 							</AlertDialogFooter>

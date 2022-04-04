@@ -16,7 +16,7 @@ function AdminProducts() {
 					product.title.toLowerCase().includes(input.toLowerCase())
 				)
 			),
-		[input]
+		[input, products]
 	);
 
 	return (

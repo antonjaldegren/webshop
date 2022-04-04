@@ -1,6 +1,6 @@
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { authState } from "../recoil/auth/atom";
-import { loginApi, getSingleUser, updateUser } from "../api";
+import { loginApi, getSingleUser } from "../api";
 
 export default function useAuth() {
 	const [{ user, token }, setAuth] = useRecoilState(authState);

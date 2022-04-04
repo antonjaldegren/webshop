@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
 	AlertDialog,
 	AlertDialogBody,
@@ -8,7 +8,6 @@ import {
 	AlertDialogOverlay,
 	useDisclosure,
 	Button,
-	Tooltip,
 	Text,
 } from "@chakra-ui/react";
 import { BsTrash } from "react-icons/bs";
@@ -16,10 +15,19 @@ import useProducts from "../../hooks/useProducts";
 import useCart from "../../hooks/useCart";
 
 function RemoveProductModal({ product }) {
+	const [isLoading, setIsLoading] = useState(false);
 	const { removeProduct } = useProducts();
 	const { removeProductFromCart } = useCart();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
+
+	async function handleRemove() {
+		setIsLoading(true);
+		removeProductFromCart(product.id);
+		await removeProduct(product.id);
+		setIsLoading(false);
+		onClose();
+	}
 
 	return (
 		<>
@@ -55,12 +63,9 @@ function RemoveProductModal({ product }) {
 								Cancel
 							</Button>
 							<Button
+								isLoading={isLoading}
 								colorScheme="red"
-								onClick={() => {
-									removeProductFromCart(product.id);
-									removeProduct(product.id);
-									onClose();
-								}}
+								onClick={handleRemove}
 								ml={3}
 							>
 								Remove

@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import {
 	Center,
 	Heading,
-	Button,
 	Stack,
 	Tabs,
 	TabList,
@@ -28,9 +27,7 @@ function Admin() {
 					<Tabs>
 						<TabList>
 							{["Products", "Users", "Carts"].map((tabTitle) => (
-								<Tab key={tabTitle}>
-									<Button variant="ghost">{tabTitle}</Button>
-								</Tab>
+								<Tab key={tabTitle}>{tabTitle}</Tab>
 							))}
 						</TabList>
 						<TabPanels>

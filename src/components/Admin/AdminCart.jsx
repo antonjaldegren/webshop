@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
 	Table,
 	Tbody,
@@ -17,7 +17,7 @@ import AccordionPanel from "./AccordionPanel";
 
 function AdminCart({ cart }) {
 	const { getUserById } = useUsers();
-	const user = useMemo(() => getUserById(cart.userId), [cart]);
+	const user = getUserById(cart.userId);
 
 	return (
 		<AccordionItem>

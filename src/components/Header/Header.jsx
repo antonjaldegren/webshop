@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Flex, HStack, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Spinner, Image } from "@chakra-ui/react";
 
 import LoginPopover from "./LoginPopover";
 import CartPopover from "./CartPopover";
@@ -27,7 +27,7 @@ function Header() {
 				align="center"
 			>
 				<Link to="/">
-					<img src={logoSrc} />
+					<Image src={logoSrc} alt="logoipsum" />
 				</Link>
 				<HStack as="nav" spacing="min(3vw, 50px)" align="center">
 					<Button

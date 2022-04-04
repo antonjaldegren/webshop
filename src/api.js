@@ -57,7 +57,6 @@ export async function getAllCarts() {
 }
 
 export async function getUserCart(id) {
-	// FIX URL
 	try {
 		const response = await axios.get(
 			`https://k4backend.osuka.dev/carts/user/${id}`

@@ -28,11 +28,12 @@ function Login() {
 
 	async function handleLogin(e) {
 		e.preventDefault();
+
 		setIsLoading(true);
 		const response = await login(username, password);
-		setIsLoading(false);
 
 		if (response === "error") {
+			setIsLoading(false);
 			setLoginHasFailed(true);
 			return;
 		}
