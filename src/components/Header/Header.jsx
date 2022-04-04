@@ -4,7 +4,7 @@ import { Box, Button, Flex, HStack, Spinner } from "@chakra-ui/react";
 
 import LoginPopover from "./LoginPopover";
 import CartPopover from "./CartPopover";
-import Logo from "./logo";
+import logoSrc from "../../logo.svg";
 
 function Header() {
 	return (
@@ -27,7 +27,7 @@ function Header() {
 				align="center"
 			>
 				<Link to="/">
-					<Logo />
+					<img src={logoSrc} />
 				</Link>
 				<HStack as="nav" spacing="min(3vw, 50px)" align="center">
 					<Button

@@ -187,14 +187,7 @@ function EditProductModal({ product }) {
 								>
 									Cancel
 								</Button>
-								<Button
-									colorScheme="blue"
-									onClick={() => {
-										saveEdit();
-										onClose();
-									}}
-									ml={3}
-								>
+								<Button colorScheme="blue" type="submit" ml={3}>
 									Save
 								</Button>
 							</AlertDialogFooter>
