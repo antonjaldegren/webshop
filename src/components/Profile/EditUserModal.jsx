@@ -15,15 +15,29 @@ import {
 	Flex,
 	Spacer,
 	Text,
-	Box,
 } from "@chakra-ui/react";
 import { BsPencilSquare } from "react-icons/bs";
 import { isEqual } from "lodash";
+import useUsers from "../../hooks/useUsers";
 
 function EditUserModal({ user }) {
 	const [editedUser, setEditedUser] = useState(user);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const { editUser } = useUsers();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+		console.log("submit");
+
+		setIsLoading(true);
+		const data = await editUser(editedUser);
+		if (data === "error") return;
+		setIsLoading(false);
+		onClose();
+	}
 
 	function resetChanges() {
 		setEditedUser(user);
@@ -59,189 +73,177 @@ function EditUserModal({ user }) {
 								</Button>
 							</Flex>
 						</AlertDialogHeader>
-						<AlertDialogBody>
-							<FormControl as={Stack} spacing={5}>
-								<Flex gap={4}>
-									<Box>
-										<FormLabel htmlFor="firstname">
-											First name
-										</FormLabel>
+						<form onSubmit={handleSubmit}>
+							<AlertDialogBody>
+								<Stack spacing={5}>
+									<Flex gap={4}>
+										<FormControl>
+											<FormLabel>First name</FormLabel>
+											<Input
+												value={
+													editedUser.name.firstname
+												}
+												onChange={(e) =>
+													setEditedUser({
+														...editedUser,
+														name: {
+															...editedUser.name,
+															firstname:
+																e.target.value,
+														},
+													})
+												}
+											/>
+										</FormControl>
+										<FormControl>
+											<FormLabel>Last name</FormLabel>
+											<Input
+												value={editedUser.name.lastname}
+												onChange={(e) =>
+													setEditedUser({
+														...editedUser,
+														name: {
+															...editedUser.name,
+															lastname:
+																e.target.value,
+														},
+													})
+												}
+											/>
+										</FormControl>
+									</Flex>
+									<FormControl>
+										<FormLabel>Username</FormLabel>
 										<Input
-											id="firstname"
-											value={editedUser.name.firstname}
+											value={editedUser.username}
 											onChange={(e) =>
 												setEditedUser({
 													...editedUser,
-													name: {
-														...editedUser.name,
-														firstname:
-															e.target.value,
-													},
+													username: e.target.value,
 												})
 											}
 										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="lastname">
-											Last name
-										</FormLabel>
+									</FormControl>
+									<FormControl>
+										<FormLabel>Email</FormLabel>
 										<Input
-											id="lastname"
-											value={editedUser.name.lastname}
+											value={editedUser.email}
 											onChange={(e) =>
 												setEditedUser({
 													...editedUser,
-													name: {
-														...editedUser.name,
-														lastname:
-															e.target.value,
-													},
+													email: e.target.value,
 												})
 											}
 										/>
-									</Box>
-								</Flex>
-								<Box>
-									<FormLabel htmlFor="username">
-										Username
-									</FormLabel>
-									<Input
-										id="username"
-										value={editedUser.username}
-										onChange={(e) =>
-											setEditedUser({
-												...editedUser,
-												username: e.target.value,
-											})
-										}
-									/>
-								</Box>
-								<Box>
-									<FormLabel htmlFor="email">Email</FormLabel>
-									<Input
-										id="email"
-										value={editedUser.email}
-										onChange={(e) =>
-											setEditedUser({
-												...editedUser,
-												email: e.target.value,
-											})
-										}
-									/>
-								</Box>
-								<Box>
-									<FormLabel htmlFor="phone">Phone</FormLabel>
-									<Input
-										id="phone"
-										value={editedUser.phone}
-										onChange={(e) =>
-											setEditedUser({
-												...editedUser,
-												phone: e.target.value,
-											})
-										}
-									/>
-								</Box>
-								<Flex gap={5}>
-									<Box>
-										<FormLabel htmlFor="street">
-											Street
-										</FormLabel>
+									</FormControl>
+									<FormControl>
+										<FormLabel>Phone</FormLabel>
 										<Input
-											id="street"
-											value={editedUser.address.street}
+											value={editedUser.phone}
 											onChange={(e) =>
 												setEditedUser({
 													...editedUser,
-													address: {
-														...editedUser.address,
-														street: e.target.value,
-													},
+													phone: e.target.value,
 												})
 											}
 										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="number">
-											Street number
-										</FormLabel>
-										<Input
-											id="number"
-											value={editedUser.address.number}
-											onChange={(e) =>
-												setEditedUser({
-													...editedUser,
-													address: {
-														...editedUser.address,
-														number: e.target.value,
-													},
-												})
-											}
-										/>
-									</Box>
-								</Flex>
-								<Flex gap={5}>
-									<Box>
-										<FormLabel htmlFor="city">
-											City
-										</FormLabel>
-										<Input
-											id="city"
-											value={editedUser.address.city}
-											onChange={(e) =>
-												setEditedUser({
-													...editedUser,
-													address: {
-														...editedUser.address,
-														city: e.target.value,
-													},
-												})
-											}
-										/>
-									</Box>
-									<Box>
-										<FormLabel htmlFor="zipcode">
-											Zipcode
-										</FormLabel>
-										<Input
-											id="zipcode"
-											value={editedUser.address.zipcode}
-											onChange={(e) =>
-												setEditedUser({
-													...editedUser,
-													address: {
-														...editedUser.address,
-														zipcode: e.target.value,
-													},
-												})
-											}
-										/>
-									</Box>
-								</Flex>
-							</FormControl>
-						</AlertDialogBody>
-						<AlertDialogFooter>
-							<Button
-								ref={cancelRef}
-								onClick={() => {
-									resetChanges();
-									onClose();
-								}}
-							>
-								Cancel
-							</Button>
-							<Button
-								colorScheme="blue"
-								onClick={() => {
-									// removeProductFromCart(product.id);
-									// removeProduct(product.id);
-									onClose();
-								}}
-								ml={3}
-							>
-								Save
-							</Button>
-						</AlertDialogFooter>
+									</FormControl>
+									<Flex gap={4}>
+										<FormControl>
+											<FormLabel>Street</FormLabel>
+											<Input
+												value={
+													editedUser.address.street
+												}
+												onChange={(e) =>
+													setEditedUser({
+														...editedUser,
+														address: {
+															...editedUser.address,
+															street: e.target
+																.value,
+														},
+													})
+												}
+											/>
+										</FormControl>
+										<FormControl>
+											<FormLabel>Street number</FormLabel>
+											<Input
+												value={
+													editedUser.address.number
+												}
+												onChange={(e) =>
+													setEditedUser({
+														...editedUser,
+														address: {
+															...editedUser.address,
+															number: e.target
+																.value,
+														},
+													})
+												}
+											/>
+										</FormControl>
+									</Flex>
+									<Flex gap={4}>
+										<FormControl>
+											<FormLabel>City</FormLabel>
+											<Input
+												value={editedUser.address.city}
+												onChange={(e) =>
+													setEditedUser({
+														...editedUser,
+														address: {
+															...editedUser.address,
+															city: e.target
+																.value,
+														},
+													})
+												}
+											/>
+										</FormControl>
+										<FormControl>
+											<FormLabel>Zipcode</FormLabel>
+											<Input
+												value={
+													editedUser.address.zipcode
+												}
+												onChange={(e) =>
+													setEditedUser({
+														...editedUser,
+														address: {
+															...editedUser.address,
+															zipcode:
+																e.target.value,
+														},
+													})
+												}
+											/>
+										</FormControl>
+									</Flex>
+								</Stack>
+							</AlertDialogBody>
+							<AlertDialogFooter>
+								<Button
+									ref={cancelRef}
+									onClick={() => {
+										resetChanges();
+										onClose();
+									}}
+								>
+									Cancel
+								</Button>
+								<Button
+									colorScheme="blue"
+									isLoading={isLoading}
+									type="submit"
+									ml={3}
+								>
+									Save
+								</Button>
+							</AlertDialogFooter>
+						</form>
 					</AlertDialogContent>
 				</AlertDialogOverlay>
 			</AlertDialog>

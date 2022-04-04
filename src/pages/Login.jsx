@@ -9,7 +9,6 @@ import {
 	Button,
 	Stack,
 	SimpleGrid,
-	Box,
 	Center,
 	Heading,
 } from "@chakra-ui/react";
@@ -27,7 +26,8 @@ function Login() {
 	const { login } = useAuth();
 	const navigate = useNavigate();
 
-	async function handleLogin() {
+	async function handleLogin(e) {
+		e.preventDefault();
 		setIsLoading(true);
 		const response = await login(username, password);
 		setIsLoading(false);
@@ -47,23 +47,28 @@ function Login() {
 			</Helmet>
 			<Center>
 				<FormControl maxWidth="container.sm">
-					<Stack spacing={5} padding={5} boxShadow="md">
+					<Stack
+						as="form"
+						onSubmit={handleLogin}
+						spacing={5}
+						padding={5}
+						boxShadow="md"
+					>
 						<Center>
 							<Heading as="h1">Login</Heading>
 						</Center>
-						<Box>
-							<FormLabel htmlFor="username">Username</FormLabel>
+						<FormControl isRequired>
+							<FormLabel>Username</FormLabel>
 							<Input
 								isInvalid={loginHasFailed}
-								id="username"
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
 							/>
-						</Box>
+						</FormControl>
 						<PasswordInput
 							title="Password"
 							isInvalid={loginHasFailed}
-							id="password"
+							isRequired={true}
 							value={password}
 							onChange={setPassword}
 						>
@@ -79,14 +84,14 @@ function Login() {
 								variant="outline"
 								as={Link}
 								to="/register"
-								onClick={() => {}}
 							>
 								Register
 							</Button>
 							<Button
 								isLoading={isLoading}
+								isDisabled={!username || !password}
 								colorScheme="blue"
-								onClick={handleLogin}
+								type="submit"
 							>
 								Login
 							</Button>

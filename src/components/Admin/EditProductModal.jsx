@@ -33,7 +33,7 @@ function EditProductModal({ product }) {
 	const cancelRef = useRef();
 	const { editProduct } = useProducts();
 
-	function saveEdit() {
+	function handleSubmit() {
 		editProduct({ ...editedProduct, price: Number(editedProduct.price) });
 	}
 
@@ -78,117 +78,127 @@ function EditProductModal({ product }) {
 								</Button>
 							</Flex>
 						</AlertDialogHeader>
-						<AlertDialogBody>
-							<FormControl as={Stack} spacing={5}>
-								<Box>
-									<FormLabel htmlFor="title">Title</FormLabel>
-									<Input
-										id="title"
-										value={editedProduct.title}
-										onChange={(e) =>
-											handleInputChange(
-												e.target.value,
-												"title"
-											)
-										}
-									/>
-								</Box>
-								<Box>
-									<FormLabel htmlFor="price">Price</FormLabel>
-									<InputGroup>
-										<InputLeftElement
-											pointerEvents="none"
-											color="gray.400"
-											children={<BsCurrencyDollar />}
-										/>
+						<form onSubmit={handleSubmit}>
+							<AlertDialogBody>
+								<FormControl as={Stack} spacing={5}>
+									<Box>
+										<FormLabel htmlFor="title">
+											Title
+										</FormLabel>
 										<Input
-											id="price"
-											value={editedProduct.price}
-											onChange={(e) => {
-												if (!isPrice(e.target.value))
-													return;
-												handleInputChange(
-													e.target.value,
-													"price"
-												);
-											}}
-										/>
-									</InputGroup>
-								</Box>
-								<Box>
-									<FormLabel htmlFor="description">
-										Description
-									</FormLabel>
-									<Textarea
-										minHeight="150px"
-										id="description"
-										value={editedProduct.description}
-										onChange={(e) =>
-											handleInputChange(
-												e.target.value,
-												"description"
-											)
-										}
-									/>
-								</Box>
-								<Box>
-									<FormLabel htmlFor="image">Image</FormLabel>
-									<InputGroup>
-										<InputLeftElement
-											pointerEvents="none"
-											color="gray.400"
-											children={<BsLink45Deg />}
-										/>
-										<Input
-											id="image"
-											value={editedProduct.image}
+											id="title"
+											value={editedProduct.title}
 											onChange={(e) =>
 												handleInputChange(
 													e.target.value,
-													"image"
+													"title"
 												)
 											}
 										/>
-									</InputGroup>
-								</Box>
-								<Box>
-									<FormLabel htmlFor="category">
-										Category
-									</FormLabel>
-									<Input
-										id="category"
-										value={editedProduct.category}
-										onChange={(e) =>
-											handleInputChange(
-												e.target.value.toLowerCase(),
-												"category"
-											)
-										}
-									/>
-								</Box>
-							</FormControl>
-						</AlertDialogBody>
-						<AlertDialogFooter>
-							<Button
-								ref={cancelRef}
-								onClick={() => {
-									resetChanges();
-									onClose();
-								}}
-							>
-								Cancel
-							</Button>
-							<Button
-								colorScheme="blue"
-								onClick={() => {
-									saveEdit();
-									onClose();
-								}}
-								ml={3}
-							>
-								Save
-							</Button>
-						</AlertDialogFooter>
+									</Box>
+									<Box>
+										<FormLabel htmlFor="price">
+											Price
+										</FormLabel>
+										<InputGroup>
+											<InputLeftElement
+												pointerEvents="none"
+												color="gray.400"
+												children={<BsCurrencyDollar />}
+											/>
+											<Input
+												id="price"
+												value={editedProduct.price}
+												onChange={(e) => {
+													if (
+														!isPrice(e.target.value)
+													)
+														return;
+													handleInputChange(
+														e.target.value,
+														"price"
+													);
+												}}
+											/>
+										</InputGroup>
+									</Box>
+									<Box>
+										<FormLabel htmlFor="description">
+											Description
+										</FormLabel>
+										<Textarea
+											minHeight="150px"
+											id="description"
+											value={editedProduct.description}
+											onChange={(e) =>
+												handleInputChange(
+													e.target.value,
+													"description"
+												)
+											}
+										/>
+									</Box>
+									<Box>
+										<FormLabel htmlFor="image">
+											Image
+										</FormLabel>
+										<InputGroup>
+											<InputLeftElement
+												pointerEvents="none"
+												color="gray.400"
+												children={<BsLink45Deg />}
+											/>
+											<Input
+												id="image"
+												value={editedProduct.image}
+												onChange={(e) =>
+													handleInputChange(
+														e.target.value,
+														"image"
+													)
+												}
+											/>
+										</InputGroup>
+									</Box>
+									<Box>
+										<FormLabel htmlFor="category">
+											Category
+										</FormLabel>
+										<Input
+											id="category"
+											value={editedProduct.category}
+											onChange={(e) =>
+												handleInputChange(
+													e.target.value.toLowerCase(),
+													"category"
+												)
+											}
+										/>
+									</Box>
+								</FormControl>
+							</AlertDialogBody>
+							<AlertDialogFooter>
+								<Button
+									ref={cancelRef}
+									onClick={() => {
+										resetChanges();
+										onClose();
+									}}
+								>
+									Cancel
+								</Button>
+								<Button
+									colorScheme="blue"
+									onClick={() => {
+										saveEdit();
+										onClose();
+									}}
+									ml={3}
+								>
+									Save
+								</Button>
+							</AlertDialogFooter>
+						</form>
 					</AlertDialogContent>
 				</AlertDialogOverlay>
 			</AlertDialog>

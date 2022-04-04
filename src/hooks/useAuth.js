@@ -1,6 +1,6 @@
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { authState } from "../recoil/auth/atom";
-import { loginApi, getSingleUser } from "../api";
+import { loginApi, getSingleUser, updateUser } from "../api";
 
 export default function useAuth() {
 	const [{ user, token }, setAuth] = useRecoilState(authState);
@@ -22,15 +22,11 @@ export default function useAuth() {
 		resetAuth();
 	}
 
-	async function editUser() {
-		// TODO: finish function!
-	}
-
 	return {
 		user,
 		token,
+		setAuth,
 		login,
 		logout,
-		editUser,
 	};
 }

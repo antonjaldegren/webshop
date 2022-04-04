@@ -1,23 +1,29 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
 	FormLabel,
 	Input,
 	InputRightElement,
 	InputGroup,
-	Box,
+	FormControl,
 } from "@chakra-ui/react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { BsFillEyeSlashFill } from "react-icons/bs";
 
-function PasswordInput({ title, isInvalid, id, value, onChange, children }) {
+function PasswordInput({
+	title,
+	isInvalid,
+	isRequired,
+	value,
+	onChange,
+	children,
+}) {
 	const [show, setShow] = useState(false);
 
 	return (
-		<Box>
-			<FormLabel htmlFor={id}>{title}</FormLabel>
+		<FormControl isRequired={isRequired}>
+			<FormLabel>{title}</FormLabel>
 			<InputGroup>
 				<Input
-					id={id}
 					isInvalid={isInvalid}
 					type={show ? "text" : "password"}
 					value={value}
@@ -31,7 +37,7 @@ function PasswordInput({ title, isInvalid, id, value, onChange, children }) {
 				</InputRightElement>
 			</InputGroup>
 			{children}
-		</Box>
+		</FormControl>
 	);
 }
 

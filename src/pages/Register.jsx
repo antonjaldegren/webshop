@@ -9,13 +9,14 @@ import {
 	Button,
 	Stack,
 	SimpleGrid,
-	Box,
 	Center,
 	Heading,
 } from "@chakra-ui/react";
-import { addNewUser } from "../api";
+import { isDigit } from "../utils";
 import AnimatedPage from "../components/AnimatedPage";
 import PasswordInput from "../components/PasswordInput";
+import useUsers from "../hooks/useUsers";
+import useAuth from "../hooks/useAuth";
 
 const initialState = {
 	email: "",
@@ -38,16 +39,29 @@ const initialState = {
 function Register() {
 	const [user, setUser] = useState(initialState);
 	const [isLoading, setIsLoading] = useState(false);
+	const { registerUser } = useUsers();
+	const { login } = useAuth();
 	const navigate = useNavigate();
 
-	function handleRegister() {
+	async function handleRegister(e) {
+		e.preventDefault();
 		setIsLoading(true);
-		addNewUser(user).then((userData) => {
-			setIsLoading(false);
-			if (userData.status !== "error") {
-				navigate("/login");
-			}
+		const registerRes = await registerUser({
+			...user,
+			address: { ...user.address, number: Number(user.address.number) },
 		});
+		if (registerRes === "error") {
+			setIsLoading(false);
+			return;
+		}
+
+		const loginRes = await login(
+			registerRes.username,
+			registerRes.password
+		);
+		setIsLoading(false);
+		if (loginRes === "error") return;
+		navigate("/");
 	}
 
 	return (
@@ -56,200 +70,189 @@ function Register() {
 				<title>Webshop | REGISTER</title>
 			</Helmet>
 			<Center>
-				<FormControl maxWidth="container.sm">
-					<Stack spacing={5} padding={5} boxShadow="md">
-						<Center>
-							<Heading as="h1">Register new user</Heading>
-						</Center>
-						<SimpleGrid columns={2} spacing={4}>
-							<Box>
-								<FormLabel htmlFor="firstname">
-									First name
-								</FormLabel>
-								<Input
-									id="firstname"
-									value={user.name.firstname}
-									onChange={(e) =>
-										setUser({
-											...user,
-											name: {
-												...user.name,
-												firstname: e.target.value,
-											},
-										})
-									}
-								/>
-							</Box>
-							<Box>
-								<FormLabel htmlFor="lastname">
-									Last name
-								</FormLabel>
-								<Input
-									id="lastname"
-									value={user.name.lastname}
-									onChange={(e) =>
-										setUser({
-											...user,
-											name: {
-												...user.name,
-												lastname: e.target.value,
-											},
-										})
-									}
-								/>
-							</Box>
-						</SimpleGrid>
-						<Box>
-							<FormLabel htmlFor="username">Username</FormLabel>
+				<Stack
+					as="form"
+					onSubmit={handleRegister}
+					spacing={5}
+					padding={5}
+					boxShadow="md"
+					maxWidth="container.sm"
+				>
+					<Center>
+						<Heading as="h1">Register new user</Heading>
+					</Center>
+					<SimpleGrid columns={2} spacing={4}>
+						<FormControl isRequired>
+							<FormLabel>First name</FormLabel>
 							<Input
-								id="username"
-								value={user.username}
+								value={user.name.firstname}
 								onChange={(e) =>
 									setUser({
 										...user,
-										username: e.target.value,
+										name: {
+											...user.name,
+											firstname: e.target.value,
+										},
 									})
 								}
 							/>
-						</Box>
-						<PasswordInput
-							title="Password"
-							isInvalid={false}
-							id="password"
-							value={user.password}
-							onChange={(value) =>
-								setUser({ ...user, password: value })
+						</FormControl>
+						<FormControl isRequired>
+							<FormLabel>Last name</FormLabel>
+							<Input
+								value={user.name.lastname}
+								onChange={(e) =>
+									setUser({
+										...user,
+										name: {
+											...user.name,
+											lastname: e.target.value,
+										},
+									})
+								}
+							/>
+						</FormControl>
+					</SimpleGrid>
+					<FormControl isRequired>
+						<FormLabel>Username</FormLabel>
+						<Input
+							value={user.username}
+							onChange={(e) =>
+								setUser({
+									...user,
+									username: e.target.value,
+								})
 							}
 						/>
-						<Box>
-							<FormLabel htmlFor="email">Email</FormLabel>
+					</FormControl>
+					<PasswordInput
+						title="Password"
+						isRequired={true}
+						value={user.password}
+						onChange={(value) =>
+							setUser({ ...user, password: value })
+						}
+					/>
+					<FormControl isRequired>
+						<FormLabel>Email</FormLabel>
+						<Input
+							value={user.email}
+							onChange={(e) =>
+								setUser({
+									...user,
+									email: e.target.value,
+								})
+							}
+						/>
+					</FormControl>
+					<FormControl isRequired>
+						<FormLabel>Phone</FormLabel>
+						<Input
+							type="tel"
+							value={user.phone}
+							onChange={(e) =>
+								setUser({
+									...user,
+									phone: e.target.value,
+								})
+							}
+						/>
+					</FormControl>
+					<SimpleGrid columns={2} spacing={4}>
+						<FormControl isRequired>
+							<FormLabel>Street</FormLabel>
 							<Input
-								id="email"
-								value={user.email}
+								value={user.address.street}
 								onChange={(e) =>
 									setUser({
 										...user,
-										email: e.target.value,
+										address: {
+											...user.address,
+											street: e.target.value,
+										},
 									})
 								}
 							/>
-						</Box>
-						<Box>
-							<FormLabel htmlFor="phone">Phone</FormLabel>
+						</FormControl>
+						<FormControl isRequired>
+							<FormLabel>Street number</FormLabel>
 							<Input
-								id="phone"
-								type="tel"
-								value={user.phone}
+								value={user.address.number}
+								onChange={(e) => {
+									if (!isDigit(e.target.value)) return;
+									setUser({
+										...user,
+										address: {
+											...user.address,
+											number: e.target.value,
+										},
+									});
+								}}
+							/>
+						</FormControl>
+					</SimpleGrid>
+					<SimpleGrid columns={2} spacing={4}>
+						<FormControl isRequired>
+							<FormLabel>City</FormLabel>
+							<Input
+								value={user.address.city}
 								onChange={(e) =>
 									setUser({
 										...user,
-										phone: e.target.value,
+										address: {
+											...user.address,
+											city: e.target.value,
+										},
 									})
 								}
 							/>
-						</Box>
-						<SimpleGrid columns={2} spacing={4}>
-							<Box>
-								<FormLabel htmlFor="street">Street</FormLabel>
-								<Input
-									id="street"
-									value={user.address.street}
-									onChange={(e) =>
-										setUser({
-											...user,
-											address: {
-												...user.address,
-												street: e.target.value,
-											},
-										})
-									}
-								/>
-							</Box>
-							<Box>
-								<FormLabel htmlFor="number">
-									Street number
-								</FormLabel>
-								<Input
-									id="number"
-									value={user.address.number}
-									onChange={(e) =>
-										setUser({
-											...user,
-											address: {
-												...user.address,
-												number: e.target.value,
-											},
-										})
-									}
-								/>
-							</Box>
-						</SimpleGrid>
-						<SimpleGrid columns={2} spacing={4}>
-							<Box>
-								<FormLabel htmlFor="city">City</FormLabel>
-								<Input
-									id="city"
-									value={user.address.city}
-									onChange={(e) =>
-										setUser({
-											...user,
-											address: {
-												...user.address,
-												city: e.target.value,
-											},
-										})
-									}
-								/>
-							</Box>
-							<Box>
-								<FormLabel htmlFor="zipcode">Zipcode</FormLabel>
-								<Input
-									id="zipcode"
-									value={user.address.zipcode}
-									onChange={(e) =>
-										setUser({
-											...user,
-											address: {
-												...user.address,
-												zipcode: e.target.value,
-											},
-										})
-									}
-								/>
-							</Box>
-						</SimpleGrid>
-						<SimpleGrid columns={[1, 2, 2]} spacing={4}>
-							<Button
-								as={Link}
-								to="/login"
-								colorScheme="blue"
-								variant="outline"
-								onClick={() => {}}
-							>
-								Login
-							</Button>
-							<Button
-								isLoading={isLoading}
-								colorScheme="blue"
-								onClick={handleRegister}
-								disabled={
-									!user.name.firstname ||
-									!user.name.lastname ||
-									!user.username ||
-									!user.password ||
-									!user.email ||
-									!user.phone ||
-									!user.address.street ||
-									!user.address.number ||
-									!user.address.city ||
-									!user.address.zipcode
+						</FormControl>
+						<FormControl isRequired>
+							<FormLabel>Zipcode</FormLabel>
+							<Input
+								value={user.address.zipcode}
+								onChange={(e) =>
+									setUser({
+										...user,
+										address: {
+											...user.address,
+											zipcode: e.target.value,
+										},
+									})
 								}
-							>
-								Register
-							</Button>
-						</SimpleGrid>
-					</Stack>
-				</FormControl>
+							/>
+						</FormControl>
+					</SimpleGrid>
+					<SimpleGrid columns={[1, 2, 2]} spacing={4}>
+						<Button
+							as={Link}
+							to="/login"
+							colorScheme="blue"
+							variant="outline"
+						>
+							Login
+						</Button>
+						<Button
+							isLoading={isLoading}
+							colorScheme="blue"
+							type="submit"
+							isDisabled={
+								!user.name.firstname ||
+								!user.name.lastname ||
+								!user.username ||
+								!user.password ||
+								!user.email ||
+								!user.phone ||
+								!user.address.street ||
+								!user.address.number ||
+								!user.address.city ||
+								!user.address.zipcode
+							}
+						>
+							Register
+						</Button>
+					</SimpleGrid>
+				</Stack>
 			</Center>
 		</AnimatedPage>
 	);

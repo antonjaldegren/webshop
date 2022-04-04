@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { useRecoilState } from "recoil";
 import {
 	AlertDialog,
 	AlertDialogBody,
@@ -8,7 +7,6 @@ import {
 	AlertDialogContent,
 	AlertDialogOverlay,
 	useDisclosure,
-	FormControl,
 	Button,
 	Stack,
 	Flex,
@@ -16,12 +14,11 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { BsShieldLock } from "react-icons/bs";
-import { updateUser } from "../../api";
-import { authState } from "../../recoil/auth/atom";
 import InputError from "../InputError";
 import PasswordInput from "../PasswordInput";
+import useUsers from "../../hooks/useUsers";
 
-function ChangePasswordModal() {
+function ChangePasswordModal({ user }) {
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
@@ -30,33 +27,32 @@ function ChangePasswordModal() {
 	const [newIsWrong, setNewIsWrong] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const [auth, setAuth] = useRecoilState(authState);
+	const { editUser } = useUsers();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
 
-	function handleLogin() {
-		if (oldPassword !== auth.user.password) {
-			setOldIsWrong(true);
-			if (newPassword !== repeatPassword) setNewIsWrong(true);
+	async function handleSubmit(e) {
+		e.preventDefault();
+		if (oldPassword !== user.password || newPassword !== repeatPassword) {
+			setOldIsWrong(oldPassword !== user.password);
+			setNewIsWrong(newPassword !== repeatPassword);
 			return;
 		}
+
 		setIsLoading(true);
-		updateUser(auth.user.id, { ...auth.user, password: newPassword }).then(
-			(data) => {
-				data && setAuth({ ...auth, user: data });
-				setIsLoading(false);
-				resetStates();
-				onClose();
-			}
-		);
+		const data = await editUser({ ...user, password: newPassword });
+		if (data === "error") return;
+		setIsLoading(false);
+		resetStates();
+		onClose();
 	}
 
 	function resetStates() {
 		setOldPassword("");
 		setNewPassword("");
 		setRepeatPassword("");
-		setOldIsWrong("");
-		setNewIsWrong("");
+		setOldIsWrong(false);
+		setNewIsWrong(false);
 	}
 
 	return (
@@ -83,69 +79,69 @@ function ChangePasswordModal() {
 								<Spacer />
 							</Flex>
 						</AlertDialogHeader>
-						<AlertDialogBody>
-							<FormControl as={Stack} spacing={5}>
-								<PasswordInput
-									isInvalid={oldIsWrong}
-									title="Old password"
-									id="oldPassword"
-									value={oldPassword}
-									onChange={setOldPassword}
+						<form onSubmit={handleSubmit}>
+							<AlertDialogBody>
+								<Stack spacing={5}>
+									<PasswordInput
+										isRequired={true}
+										isInvalid={oldIsWrong}
+										title="Old password"
+										value={oldPassword}
+										onChange={setOldPassword}
+									>
+										{oldIsWrong ? (
+											<InputError>
+												Old password is incorrect!
+											</InputError>
+										) : null}
+									</PasswordInput>
+									<PasswordInput
+										isRequired={true}
+										isInvalid={newIsWrong}
+										title="New password"
+										value={newPassword}
+										onChange={setNewPassword}
+									/>
+									<PasswordInput
+										isRequired={true}
+										isInvalid={newIsWrong}
+										title="Repeat new password"
+										value={repeatPassword}
+										onChange={setRepeatPassword}
+									>
+										{newIsWrong ? (
+											<InputError>
+												New passwords are not matching!
+											</InputError>
+										) : null}
+									</PasswordInput>
+								</Stack>
+							</AlertDialogBody>
+							<AlertDialogFooter>
+								<Button
+									ref={cancelRef}
+									onClick={() => {
+										resetStates();
+										onClose();
+									}}
 								>
-									{oldIsWrong ? (
-										<InputError>
-											Old password is incorrect!
-										</InputError>
-									) : null}
-								</PasswordInput>
-								<PasswordInput
-									isInvalid={newIsWrong}
-									title="New password"
-									id="newPassword"
-									value={newPassword}
-									onChange={setNewPassword}
-								/>
-								<PasswordInput
-									isInvalid={newIsWrong}
-									title="Repeat new password"
-									id="repeatPassword"
-									value={repeatPassword}
-									onChange={setRepeatPassword}
+									Cancel
+								</Button>
+								<Button
+									isLoading={isLoading}
+									disabled={
+										!oldPassword ||
+										!newPassword ||
+										!repeatPassword
+									}
+									colorScheme="blue"
+									type="submit"
+									ml={4}
 								>
-									{newIsWrong ? (
-										<InputError>
-											New passwords are not matching!
-										</InputError>
-									) : null}
-								</PasswordInput>
-							</FormControl>
-						</AlertDialogBody>
-						<AlertDialogFooter>
-							<Button
-								ref={cancelRef}
-								onClick={() => {
-									resetStates();
-									onClose();
-								}}
-							>
-								Cancel
-							</Button>
-							<Button
-								isLoading={isLoading}
-								disabled={
-									!oldPassword ||
-									!newPassword ||
-									!repeatPassword
-								}
-								colorScheme="blue"
-								onClick={() => {
-									handleLogin();
-								}}
-								ml={4}
-							>
-								Save
-							</Button>
-						</AlertDialogFooter>
+									Save
+								</Button>
+							</AlertDialogFooter>
+						</form>
 					</AlertDialogContent>
 				</AlertDialogOverlay>
 			</AlertDialog>

@@ -8,3 +8,7 @@ export function numberToPrice(num) {
 export function isPrice(input) {
 	return /^\d*\.?\d{0,2}$/.test(input);
 }
+
+export function isDigit(input) {
+	return /^(\s*|\d+)$/.test(input);
+}
