@@ -16,6 +16,8 @@ import {
 	PopoverCloseButton,
 	VStack,
 	Spacer,
+	Alert,
+	AlertIcon,
 } from "@chakra-ui/react";
 import { numberToPrice } from "../../utils";
 
@@ -52,7 +54,14 @@ function CartPopover() {
 								<CartItemPreview key={item.id} item={item} />
 							))
 						) : (
-							<Text paddingY={3}>No products added</Text>
+							<Alert
+								status="info"
+								variant="left-accent"
+								// fontSize="lg"
+							>
+								<AlertIcon />
+								No products added!
+							</Alert>
 						)}
 					</VStack>
 				</PopoverBody>

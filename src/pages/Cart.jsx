@@ -1,6 +1,15 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { Heading, Spacer, Flex, Text, Stack, Button } from "@chakra-ui/react";
+import {
+	Heading,
+	Spacer,
+	Flex,
+	Text,
+	Stack,
+	Button,
+	Alert,
+	AlertIcon,
+} from "@chakra-ui/react";
 import AnimatedPage from "../components/AnimatedPage";
 import useCart from "../hooks/useCart";
 import CartItem from "../components/Cart/CartItem";
@@ -23,9 +32,10 @@ function Cart() {
 					) : null}
 				</Flex>
 				{!totalItems ? (
-					<Text fontSize="lg" paddingY={6}>
-						No products added
-					</Text>
+					<Alert status="info" variant="left-accent" fontSize="lg">
+						<AlertIcon />
+						No products added!
+					</Alert>
 				) : (
 					<Flex direction={["column", "column", "row"]} gap={6}>
 						<Stack spacing={6} w={["100%", "100%", "60%"]}>
