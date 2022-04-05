@@ -54,11 +54,7 @@ function CartPopover() {
 								<CartItemPreview key={item.id} item={item} />
 							))
 						) : (
-							<Alert
-								status="info"
-								variant="left-accent"
-								// fontSize="lg"
-							>
+							<Alert status="info" variant="left-accent">
 								<AlertIcon />
 								No products added!
 							</Alert>
