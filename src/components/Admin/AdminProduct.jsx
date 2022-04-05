@@ -6,10 +6,14 @@ import {
 	Stack,
 	Flex,
 	Spacer,
-	Text,
 	Link,
 	Box,
 	Heading,
+	Table,
+	Tbody,
+	Th,
+	Td,
+	Tr,
 } from "@chakra-ui/react";
 import { numberToPrice } from "../../utils";
 import RemoveProductModal from "./RemoveProductModal";
@@ -43,16 +47,38 @@ function AdminProduct({ product }) {
 							<RemoveProductModal product={product} />
 						</Flex>
 					</Flex>
-					<Text>Title: {product.title}</Text>
-					<Text>Price: ${numberToPrice(product.price)}</Text>
-					<Text>Description: {product.description}</Text>
-					<Text>
-						Image:{" "}
-						<Link color="blue.500" href={product.image} isExternal>
-							{product.image}
-						</Link>
-					</Text>
-					<Text>Category: {product.category}</Text>
+					<Table>
+						<Tbody>
+							<Tr>
+								<Th>Title</Th>
+								<Td>{product.title}</Td>
+							</Tr>
+							<Tr>
+								<Th>Price</Th>
+								<Td>${numberToPrice(product.price)}</Td>
+							</Tr>
+							<Tr>
+								<Th>Description</Th>
+								<Td>{product.description}</Td>
+							</Tr>
+							<Tr>
+								<Th>Image</Th>
+								<Td>
+									<Link
+										color="blue.500"
+										href={product.image}
+										isExternal
+									>
+										{product.image}
+									</Link>
+								</Td>
+							</Tr>
+							<Tr>
+								<Th>Category</Th>
+								<Td>{product.category}</Td>
+							</Tr>
+						</Tbody>
+					</Table>
 				</Stack>
 			</AccordionPanel>
 		</AccordionItem>

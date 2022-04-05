@@ -10,6 +10,7 @@ import {
 	Tr,
 	Th,
 	Td,
+	Link,
 } from "@chakra-ui/react";
 import AccordionPanel from "./AccordionPanel";
 
@@ -49,7 +50,14 @@ function AdminUser({ user }) {
 						</Tr>
 						<Tr>
 							<Th>Email</Th>
-							<Td>{user.email}</Td>
+							<Td>
+								<Link
+									color="blue.500"
+									href={`mailto:${user.email}`}
+								>
+									{user.email}
+								</Link>
+							</Td>
 						</Tr>
 						<Tr>
 							<Th>Phone</Th>
