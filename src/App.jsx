@@ -1,9 +1,10 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Container, Center } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 import SkeletonPage from "./components/SkeletonPage";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer";
 import AnimatedPage from "./components/AnimatedPage";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -54,9 +55,7 @@ function App() {
 					</AnimatedPage>
 				</Suspense>
 			</Container>
-			<Center as="footer" bg="gray.100" paddingY={14}>
-				Footer
-			</Center>
+			<Footer />
 		</>
 	);
 }

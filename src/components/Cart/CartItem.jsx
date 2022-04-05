@@ -60,6 +60,7 @@ function CartItem({ data: { id, quantity } }) {
 				<Flex>
 					<HStack direction="column">
 						<Button
+							size="sm"
 							colorScheme="blue"
 							variant="outline"
 							disabled={quantity === 1}
@@ -69,6 +70,7 @@ function CartItem({ data: { id, quantity } }) {
 						</Button>
 						<Center width={7}>{quantity}</Center>
 						<Button
+							size="sm"
 							colorScheme="blue"
 							variant="outline"
 							onClick={() => changeQuantity(id, quantity + 1)}
