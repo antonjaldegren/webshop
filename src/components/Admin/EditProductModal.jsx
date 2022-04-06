@@ -87,7 +87,7 @@ function EditProductModal({ product }) {
 								<Text as="span">Edit product</Text>
 								<Spacer />
 								<Button
-									disabled={isEqual(product, editedProduct)}
+									isDisabled={isEqual(product, editedProduct)}
 									onClick={resetChanges}
 								>
 									Reset changes
@@ -191,6 +191,7 @@ function EditProductModal({ product }) {
 								<Button
 									colorScheme="blue"
 									isLoading={isLoading}
+									isDisabled={isEqual(product, editedProduct)}
 									type="submit"
 									ml={3}
 								>

@@ -74,7 +74,7 @@ function EditUserModal({ user }) {
 								<Text as="span">Edit user</Text>
 								<Spacer />
 								<Button
-									disabled={isEqual(user, editedUser)}
+									isDisabled={isEqual(user, editedUser)}
 									onClick={resetChanges}
 								>
 									Reset user
@@ -245,6 +245,7 @@ function EditUserModal({ user }) {
 								<Button
 									colorScheme="blue"
 									isLoading={isLoading}
+									isDisabled={isEqual(user, editedUser)}
 									type="submit"
 									ml={3}
 								>
