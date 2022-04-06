@@ -15,6 +15,7 @@ import {
 	Flex,
 	Spacer,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
 import { BsPencilSquare } from "react-icons/bs";
 import { isEqual } from "lodash";
@@ -24,6 +25,7 @@ function EditUserModal({ user }) {
 	const [editedUser, setEditedUser] = useState(user);
 	const [isLoading, setIsLoading] = useState(false);
 
+	const toast = useToast();
 	const { editUser } = useUsers();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
@@ -36,6 +38,12 @@ function EditUserModal({ user }) {
 		const data = await editUser(editedUser);
 		if (data === "error") return;
 		setIsLoading(false);
+		toast({
+			title: "User information updated!",
+			status: "success",
+			variant: "subtle",
+			isClosable: true,
+		});
 		onClose();
 	}
 

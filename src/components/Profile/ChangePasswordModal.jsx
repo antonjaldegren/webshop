@@ -12,6 +12,7 @@ import {
 	Flex,
 	Spacer,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
 import { BsShieldLock } from "react-icons/bs";
 import InputError from "../InputError";
@@ -27,6 +28,7 @@ function ChangePasswordModal({ user }) {
 	const [newIsWrong, setNewIsWrong] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
+	const toast = useToast();
 	const { editUser } = useUsers();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
@@ -44,6 +46,12 @@ function ChangePasswordModal({ user }) {
 		if (data === "error") return;
 		setIsLoading(false);
 		resetStates();
+		toast({
+			title: "Password changed!",
+			status: "success",
+			variant: "subtle",
+			isClosable: true,
+		});
 		onClose();
 	}
 

@@ -18,6 +18,7 @@ import {
 	Flex,
 	Spacer,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
 import { BsPencilSquare } from "react-icons/bs";
 import { BsLink45Deg } from "react-icons/bs";
@@ -32,6 +33,7 @@ function EditProductModal({ product }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
 	const { editProduct } = useProducts();
+	const toast = useToast();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -42,6 +44,12 @@ function EditProductModal({ product }) {
 			price: Number(editedProduct.price),
 		});
 		setIsLoading(false);
+		toast({
+			title: "Product information updated!",
+			status: "success",
+			variant: "subtle",
+			isClosable: true,
+		});
 		onClose();
 	}
 

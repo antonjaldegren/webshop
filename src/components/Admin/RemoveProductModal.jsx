@@ -9,6 +9,7 @@ import {
 	useDisclosure,
 	Button,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
 import { BsTrash } from "react-icons/bs";
 import useProducts from "../../hooks/useProducts";
@@ -20,12 +21,19 @@ function RemoveProductModal({ product }) {
 	const { removeProductFromCart } = useCart();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef();
+	const toast = useToast();
 
 	async function handleRemove() {
 		setIsLoading(true);
 		removeProductFromCart(product.id);
 		await removeProduct(product.id);
 		setIsLoading(false);
+		toast({
+			title: "Product removed!",
+			status: "success",
+			variant: "subtle",
+			isClosable: true,
+		});
 		onClose();
 	}
 

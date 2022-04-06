@@ -14,6 +14,7 @@ import {
 	PopoverCloseButton,
 	VStack,
 	useDisclosure,
+	useToast,
 } from "@chakra-ui/react";
 import { BsPerson } from "react-icons/bs";
 import { BsPersonFill } from "react-icons/bs";
@@ -24,6 +25,7 @@ function LoginPopover() {
 	const { onOpen, onClose, isOpen } = useDisclosure();
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
+	const toast = useToast();
 
 	return (
 		<Popover
@@ -97,6 +99,12 @@ function LoginPopover() {
 									onClick={() => {
 										onClose();
 										logout();
+										toast({
+											title: "User succesfully logged out!",
+											status: "success",
+											variant: "subtle",
+											isClosable: true,
+										});
 										if (
 											pathname === "/profile" ||
 											pathname === "/admin"

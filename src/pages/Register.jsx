@@ -11,6 +11,7 @@ import {
 	SimpleGrid,
 	Center,
 	Heading,
+	useToast,
 } from "@chakra-ui/react";
 import { isDigit } from "../utils";
 import AnimatedPage from "../components/AnimatedPage";
@@ -42,6 +43,7 @@ function Register() {
 	const { registerUser } = useUsers();
 	const { login } = useAuth();
 	const navigate = useNavigate();
+	const toast = useToast();
 
 	async function handleRegister(e) {
 		e.preventDefault();
@@ -59,8 +61,20 @@ function Register() {
 			registerRes.username,
 			registerRes.password
 		);
-		setIsLoading(false);
-		if (loginRes === "error") return;
+
+		if (loginRes === "error") {
+			setIsLoading(false);
+			return;
+		}
+
+		toast({
+			title: `Welcome ${user.username}!`,
+			description: "Account successfully created.",
+			status: "success",
+			variant: "subtle",
+			isClosable: true,
+		});
+
 		navigate("/");
 	}
 

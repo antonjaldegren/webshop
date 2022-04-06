@@ -11,6 +11,7 @@ import {
 	SimpleGrid,
 	Center,
 	Heading,
+	useToast,
 } from "@chakra-ui/react";
 import AnimatedPage from "../components/AnimatedPage";
 import PasswordInput from "../components/PasswordInput";
@@ -22,6 +23,7 @@ function Login() {
 	const [password, setPassword] = useState("");
 	const [loginHasFailed, setLoginHasFailed] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const toast = useToast();
 
 	const { login } = useAuth();
 	const navigate = useNavigate();
@@ -37,6 +39,13 @@ function Login() {
 			setLoginHasFailed(true);
 			return;
 		}
+
+		toast({
+			title: `Welcome ${username}!`,
+			status: "success",
+			variant: "subtle",
+			isClosable: true,
+		});
 
 		navigate("/");
 	}
