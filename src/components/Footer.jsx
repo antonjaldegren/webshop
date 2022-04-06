@@ -7,6 +7,8 @@ import {
 } from "react-icons/fa";
 
 function Footer() {
+	const currentYear = new Date().getFullYear();
+
 	return (
 		<Center as="footer" bg="gray.100" paddingY={14} color="gray.600">
 			<Stack alignItems="center" spacing={10}>
@@ -30,7 +32,7 @@ function Footer() {
 					</Stack>
 				</HStack>
 				<Text fontSize="xs" color="gray.400">
-					© 2022 Webshop Inc. All rights reserved
+					© {currentYear} Webshop Inc. All rights reserved
 				</Text>
 			</Stack>
 		</Center>
