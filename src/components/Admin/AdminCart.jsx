@@ -1,19 +1,17 @@
 import React from "react";
 import {
-	Table,
-	Tbody,
-	Th,
-	Td,
-	Tr,
 	Box,
 	UnorderedList,
 	AccordionItem,
 	AccordionButton,
 	AccordionIcon,
+	Stack,
+	Text,
 } from "@chakra-ui/react";
 import useUsers from "../../hooks/useUsers";
 import AdminCartProduct from "./AdminCartProduct";
 import AccordionPanel from "./AccordionPanel";
+import DataRow from "../DataRow";
 
 function AdminCart({ cart }) {
 	const { getUserById } = useUsers();
@@ -34,31 +32,24 @@ function AdminCart({ cart }) {
 				<AccordionIcon />
 			</AccordionButton>
 			<AccordionPanel pb={4}>
-				<Table>
-					<Tbody>
-						<Tr>
-							<Th>Cart ID</Th>
-							<Td>{cart.id}</Td>
-						</Tr>
-						<Tr>
-							<Th>User</Th>
-							<Td>{user.username}</Td>
-						</Tr>
-						<Tr>
-							<Th>Products</Th>
-							<Td>
-								<UnorderedList>
-									{cart.products.map((product) => (
-										<AdminCartProduct
-											key={product.productId}
-											product={product}
-										/>
-									))}
-								</UnorderedList>
-							</Td>
-						</Tr>
-					</Tbody>
-				</Table>
+				<Stack spacing={6}>
+					<DataRow title="Cart ID">
+						<Text>{cart.id}</Text>
+					</DataRow>
+					<DataRow title="User">
+						<Text>{user.username}</Text>
+					</DataRow>
+					<DataRow title="Products">
+						<UnorderedList>
+							{cart.products.map((product) => (
+								<AdminCartProduct
+									key={product.productId}
+									product={product}
+								/>
+							))}
+						</UnorderedList>
+					</DataRow>
+				</Stack>
 			</AccordionPanel>
 		</AccordionItem>
 	);

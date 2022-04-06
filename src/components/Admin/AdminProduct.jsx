@@ -9,16 +9,13 @@ import {
 	Link,
 	Box,
 	Heading,
-	Table,
-	Tbody,
-	Th,
-	Td,
-	Tr,
+	Text,
 } from "@chakra-ui/react";
 import { numberToPrice } from "../../utils";
 import RemoveProductModal from "./RemoveProductModal";
 import EditProductModal from "./EditProductModal";
 import AccordionPanel from "./AccordionPanel";
+import DataRow from "../DataRow";
 
 function AdminProduct({ product }) {
 	return (
@@ -38,7 +35,7 @@ function AdminProduct({ product }) {
 				</AccordionButton>
 			</h2>
 			<AccordionPanel>
-				<Stack spacing={4}>
+				<Stack spacing={6}>
 					<Flex align="center">
 						<Heading size="md">Details</Heading>
 						<Spacer />
@@ -47,38 +44,23 @@ function AdminProduct({ product }) {
 							<RemoveProductModal product={product} />
 						</Flex>
 					</Flex>
-					<Table>
-						<Tbody>
-							<Tr>
-								<Th>Title</Th>
-								<Td>{product.title}</Td>
-							</Tr>
-							<Tr>
-								<Th>Price</Th>
-								<Td>${numberToPrice(product.price)}</Td>
-							</Tr>
-							<Tr>
-								<Th>Description</Th>
-								<Td>{product.description}</Td>
-							</Tr>
-							<Tr>
-								<Th>Image</Th>
-								<Td>
-									<Link
-										color="blue.500"
-										href={product.image}
-										isExternal
-									>
-										{product.image}
-									</Link>
-								</Td>
-							</Tr>
-							<Tr>
-								<Th>Category</Th>
-								<Td>{product.category}</Td>
-							</Tr>
-						</Tbody>
-					</Table>
+					<DataRow title="Title">
+						<Text>{product.title}</Text>
+					</DataRow>
+					<DataRow title="Price">
+						<Text>${numberToPrice(product.price)}</Text>
+					</DataRow>
+					<DataRow title="Description">
+						<Text>{product.description}</Text>
+					</DataRow>
+					<DataRow title="Image">
+						<Link color="blue.500" href={product.image} isExternal>
+							{product.image}
+						</Link>
+					</DataRow>
+					<DataRow title="Category">
+						<Text>{product.category}</Text>
+					</DataRow>
 				</Stack>
 			</AccordionPanel>
 		</AccordionItem>

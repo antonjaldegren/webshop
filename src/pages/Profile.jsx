@@ -16,6 +16,7 @@ import useAuth from "../hooks/useAuth";
 import EditUserModal from "../components/Profile/EditUserModal";
 import ChangePasswordModal from "../components/Profile/ChangePasswordModal";
 import AnimatedPage from "../components/AnimatedPage";
+import UserInfo from "../components/UserInfo";
 
 function Profile() {
 	const { user } = useAuth();
@@ -26,45 +27,19 @@ function Profile() {
 				<title>Webshop | PROFILE</title>
 			</Helmet>
 			<Center>
-				<Stack spacing={5} boxShadow="md" p={7}>
-					<Heading size="xl">{`Welcome, ${user.name.firstname}!`}</Heading>
+				<Stack
+					spacing={5}
+					boxShadow="md"
+					p={7}
+					flex={1}
+					maxW="container.sm"
+				>
+					<Heading size="xl">{`Welcome, ${user.username}!`}</Heading>
 					<HStack>
 						<EditUserModal user={user} />
 						<ChangePasswordModal user={user} />
 					</HStack>
-					<Table>
-						<Tbody>
-							<Tr>
-								<Th>First name</Th>
-								<Td>{user.name.firstname}</Td>
-							</Tr>
-							<Tr>
-								<Th>Last name</Th>
-								<Td>{user.name.lastname}</Td>
-							</Tr>
-							<Tr>
-								<Th>Username</Th>
-								<Td>{user.username}</Td>
-							</Tr>
-							<Tr>
-								<Th>Email</Th>
-								<Td>{user.email}</Td>
-							</Tr>
-							<Tr>
-								<Th>Phone</Th>
-								<Td>{user.phone}</Td>
-							</Tr>
-							<Tr>
-								<Th>Address</Th>
-								<Td>
-									<Text>{user.address.street}</Text>
-									<Text>{user.address.number}</Text>
-									<Text>{user.address.city}</Text>
-									<Text>{user.address.zipcode}</Text>
-								</Td>
-							</Tr>
-						</Tbody>
-					</Table>
+					<UserInfo user={user} />
 				</Stack>
 			</Center>
 		</AnimatedPage>

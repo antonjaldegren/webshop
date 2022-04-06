@@ -52,7 +52,7 @@ function LoginPopover() {
 			<PopoverContent maxW="225px">
 				<PopoverArrow />
 				<PopoverHeader>
-					{token ? `Welcome, ${user.name.firstname}!` : "Profile"}
+					{token ? `Welcome, ${user.username}!` : "Profile"}
 				</PopoverHeader>
 				<PopoverCloseButton />
 				<PopoverBody>
